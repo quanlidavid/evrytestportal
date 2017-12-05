@@ -1,5 +1,5 @@
 from django.urls import path
-from evrytesttools.views import homepage
+from evrytesttools.views import homepage,icdpage
 from . import views
 
 urlpatterns = [
@@ -10,5 +10,6 @@ urlpatterns = [
     # url(r'^run/logdetails.html$',views.logdetails_page,name='logdetails'),
 
     path('', homepage),
+    path('icd/', icdpage),
     # path('post/<slug:slug>', showpost),
 ]

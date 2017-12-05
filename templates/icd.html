@@ -1,0 +1,36 @@
+<!-- post.html -->
+{% extends 'base.html' %}
+{% load markdown_deux_tags %}
+{% block title %}
+Get SR info from ICD
+{% endblock %}
+{% block headmessage %}
+    <h3 style="font-family: 'Arial Black'">{{ post.title }}</h3>
+{% endblock %}
+{% block content %}
+    <form method="post" action=".">
+        <label>Service Request Id: </label> <input name="srid" type="text"><br>
+        <label>Username: </label><input name="j_username" type="text" value="feilibj@cn.ibm.com"><br>
+        <label>Password: </label><input name="j_password" type="password" value="QAZqaz!@#123"><br>
+        <button id="btn" type="submit">Get Info</button>
+        {% csrf_token %}
+    </form>
+
+    <p style="font-family: 'Arial Black';font-size: 12pt;letter-spacing: 2pt;">
+    <h3>SR info from ICD</h3>
+        <table border="1">
+            <tr><th>Service Request Id</th><td>{{ sr_icd_info.sr }}</td></tr>
+            <tr><th>Summary</th><td>{{ sr_icd_info.summary }}</td></tr>
+            <tr><th>Classification Description</th><td>{{ sr_icd_info.classification_description }}</td></tr>
+            <tr><th>Status</th><td>{{ sr_icd_info.status }}</td></tr>
+            <tr><th>Configuration Item Name</th><td>{{ sr_icd_info.configuration_item_name }}</td></tr>
+            <tr><th>ITDIPADDRESS_EP(ip)</th><td>{{ sr_icd_info.ip }}</td></tr>
+            <tr><th>ITDHOSTNAME(hostname)</th><td>{{ sr_icd_info.hostname }}</td></tr>
+            <tr><th>ITDCUSTOMER(customer)</th><td>{{ sr_icd_info.customer }}</td></tr>
+            <tr><th>ITDDISK0SIZE(disksize)</th><td>{{ sr_icd_info.disksize }}</td></tr>
+            <tr><th>ITDMEMORY(memsize)</th><td>{{ sr_icd_info.memsize }}</td></tr>
+            <tr><th>EVRVIRTUALSIZE(virtualsize)</th><td>{{ sr_icd_info.virtualsize }}</td></tr>
+            <tr><th>EVRVCPUSIZE(cpusize)</th><td>{{ sr_icd_info.cpusize }}</td></tr>
+        </table>
+    </p>
+{% endblock %}
