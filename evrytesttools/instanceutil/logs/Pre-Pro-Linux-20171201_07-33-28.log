@@ -1,0 +1,382 @@
+2017-12-01 15:33:29 preproductlinux.py [line:52] INFO Created connection to rundeck server: 146.213.160.116
+2017-12-01 15:33:31 preproductlinux.py [line:73] INFO Last login: Fri Dec  1 08:31:19 2017 from ilp-alfine.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+2017-12-01 15:33:36 preproductlinux.py [line:85] INFO [e214375@rundeckppr1 ~]$ export VAULT_ADDR=http://127.0.0.1:8200
+[e214375@rundeckppr1 ~]$
+2017-12-01 15:33:41 preproductlinux.py [line:85] INFO vault auth -method=ldap username=e214375
+Password (will be hidden):
+2017-12-01 15:33:46 preproductlinux.py [line:85] INFO Successfully authenticated! You are now logged in.
+The token below is already saved in the session. You do not
+need to "vault auth" again with the token.
+token: 735cf6d7-b9d8-36cf-ba8c-f6add65fd80b
+token_duration: 2764799
+token_policies: [default testteam]
+[e214375@rundeckppr1 ~]$
+2017-12-01 15:33:51 preproductlinux.py [line:85] INFO vault read secret/OS/VMWare/EVR-NO-CCD1/evr-ccd1-l01257 [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K7
+Key             	Value
+---             	-----
+refresh_interval	768h0m0s
+descritpion     	root
+password        	xvc76DMiJpFXuF2TBemS
+
+[e214375@rundeckppr1 ~]$
+2017-12-01 15:33:52 preproductlinux.py [line:73] INFO Last login: Fri Dec  1 08:33:26 2017 from ilp-alfine.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+2017-12-01 15:33:57 preproductlinux.py [line:85] INFO [e214375@rundeckppr1 ~]$ ssh root@10.114.27.106
+root@10.114.27.106's password:
+2017-12-01 15:34:02 preproductlinux.py [line:85] INFO Last login: Fri Dec  1 08:31:25 2017 from 146.213.160.116
+IBMs internal systems must only be used for conducting IBMs business or for purposes authorized by IBM management.
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:07 preproductlinux.py [line:85] INFO hostname
+evr-ccd1-l01257.novalocal
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:07 preproductlinux.py [line:105] INFO hostname
+evr-ccd1-l01257.novalocal
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:12 preproductlinux.py [line:85] INFO ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.114.27.106  netmask 255.255.255.192  broadcast 10.114.27.127
+        ether fa:16:3e:75:bb:e0  txqueuelen 1000  (Ethernet)
+        RX packets 88304  bytes 219343692 (209.1 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 69477  bytes 6026258 (5.7 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 4972  bytes 261160 (255.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4972  bytes 261160 (255.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:12 preproductlinux.py [line:111] INFO ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.114.27.106  netmask 255.255.255.192  broadcast 10.114.27.127
+        ether fa:16:3e:75:bb:e0  txqueuelen 1000  (Ethernet)
+        RX packets 88304  bytes 219343692 (209.1 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 69477  bytes 6026258 (5.7 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 4972  bytes 261160 (255.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4972  bytes 261160 (255.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:17 preproductlinux.py [line:85] INFO cat /proc/cpuinfo
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 79
+model name	: Intel(R) Xeon(R) CPU E5-2690 v4 @ 2.60GHz
+stepping	: 1
+microcode	: 0xb00001d
+cpu MHz		: 2599.777
+cache size	: 35840 KB
+physical id	: 0
+siblings	: 1
+core id		: 0
+cpu cores	: 1
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 invpcid rtm rdseed adx smap xsaveopt arat
+bogomips	: 5199.99
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 42 bits physical, 48 bits virtual
+power management:
+
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:17 preproductlinux.py [line:119] INFO cat /proc/cpuinfo
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 79
+model name	: Intel(R) Xeon(R) CPU E5-2690 v4 @ 2.60GHz
+stepping	: 1
+microcode	: 0xb00001d
+cpu MHz		: 2599.777
+cache size	: 35840 KB
+physical id	: 0
+siblings	: 1
+core id		: 0
+cpu cores	: 1
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 invpcid rtm rdseed adx smap xsaveopt arat
+bogomips	: 5199.99
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 42 bits physical, 48 bits virtual
+power management:
+
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:22 preproductlinux.py [line:85] INFO free -h
+              total        used        free      shared  buff/cache   available
+Mem:           3.7G        159M        2.6G         16M        972M        3.3G
+Swap:            0B          0B          0B
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:22 preproductlinux.py [line:129] INFO free -h
+              total        used        free      shared  buff/cache   available
+Mem:           3.7G        159M        2.6G         16M        972M        3.3G
+Swap:            0B          0B          0B
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:27 preproductlinux.py [line:85] INFO lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0  128G  0 disk 
+└─sda1   8:1    0  128G  0 part /
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:27 preproductlinux.py [line:136] INFO lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0  128G  0 disk 
+└─sda1   8:1    0  128G  0 part /
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:32 preproductlinux.py [line:85] INFO timedatectl
+      Local time: Fri 2017-12-01 08:34:23 CET
+  Universal time: Fri 2017-12-01 07:34:23 UTC
+        RTC time: Fri 2017-12-01 07:34:23
+       Time zone: Europe/Oslo (CET, +0100)
+     NTP enabled: yes
+NTP synchronized: yes
+ RTC in local TZ: no
+      DST active: no
+ Last DST change: DST ended at
+                  Sun 2017-10-29 02:59:59 CEST
+                  Sun 2017-10-29 02:00:00 CET
+ Next DST change: DST begins (the clock jumps one hour forward) at
+                  Sun 2018-03-25 01:59:59 CET
+                  Sun 2018-03-25 03:00:00 CEST
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:32 preproductlinux.py [line:151] INFO timedatectl
+      Local time: Fri 2017-12-01 08:34:23 CET
+  Universal time: Fri 2017-12-01 07:34:23 UTC
+        RTC time: Fri 2017-12-01 07:34:23
+       Time zone: Europe/Oslo (CET, +0100)
+     NTP enabled: yes
+NTP synchronized: yes
+ RTC in local TZ: no
+      DST active: no
+ Last DST change: DST ended at
+                  Sun 2017-10-29 02:59:59 CEST
+                  Sun 2017-10-29 02:00:00 CET
+ Next DST change: DST begins (the clock jumps one hour forward) at
+                  Sun 2018-03-25 01:59:59 CET
+                  Sun 2018-03-25 03:00:00 CEST
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:37 preproductlinux.py [line:85] INFO ping www.google.com -c 5
+PING www.google.com (216.58.209.132) 56(84) bytes of data.
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=1 ttl=49 time=10.0 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=2 ttl=49 time=9.39 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=3 ttl=49 time=9.87 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=4 ttl=49 time=9.30 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=5 ttl=49 time=9.08 ms
+
+--- www.google.com ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4005ms
+rtt min/avg/max/mdev = 9.082/9.536/10.028/0.362 ms
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:37 preproductlinux.py [line:142] INFO ping www.google.com -c 5
+PING www.google.com (216.58.209.132) 56(84) bytes of data.
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=1 ttl=49 time=10.0 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=2 ttl=49 time=9.39 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=3 ttl=49 time=9.87 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=4 ttl=49 time=9.30 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=5 ttl=49 time=9.08 ms
+
+--- www.google.com ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4005ms
+rtt min/avg/max/mdev = 9.082/9.536/10.028/0.362 ms
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:42 preproductlinux.py [line:85] INFO ps -ef|grep ITM --color=never
+root      5965     1  0 Nov30 ?        00:00:01 /opt/IBM/ITM/lx8266/lz/bin/kcawd
+root     24223     1  0 Nov30 ?        00:00:07 /opt/IBM/ITM/lx8266/lz/bin/klzagent
+root     27409 27357  0 08:34 pts/0    00:00:00 grep --color=auto ITM --color=never
+root     27755     1  0 Nov30 ?        00:00:05 /opt/IBM/ITM/lx8266/08/bin/k08agent
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:42 preproductlinux.py [line:157] INFO ps -ef|grep ITM --color=never
+root      5965     1  0 Nov30 ?        00:00:01 /opt/IBM/ITM/lx8266/lz/bin/kcawd
+root     24223     1  0 Nov30 ?        00:00:07 /opt/IBM/ITM/lx8266/lz/bin/klzagent
+root     27409 27357  0 08:34 pts/0    00:00:00 grep --color=auto ITM --color=never
+root     27755     1  0 Nov30 ?        00:00:05 /opt/IBM/ITM/lx8266/08/bin/k08agent
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:47 preproductlinux.py [line:85] INFO /opt/IBM/ITM/bin/cinfo -r
+ 
+*********** Fri Dec  1 08:34:38 CET 2017 ******************
+User: root Groups: root
+Host name : evr-ccd1-l01257	 Installer Lvl:06.30.06.00
+CandleHome: /opt/IBM/ITM
+***********************************************************
+Host             Prod  PID    Owner  Start  ID    ..Status  
+evr-ccd1-l01257  lz    24223  root   Nov30  None  ...running
+evr-ccd1-l01257  08    27755  root   Nov30  None  ...running
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:47 preproductlinux.py [line:160] INFO /opt/IBM/ITM/bin/cinfo -r
+ 
+*********** Fri Dec  1 08:34:38 CET 2017 ******************
+User: root Groups: root
+Host name : evr-ccd1-l01257	 Installer Lvl:06.30.06.00
+CandleHome: /opt/IBM/ITM
+***********************************************************
+Host             Prod  PID    Owner  Start  ID    ..Status  
+evr-ccd1-l01257  lz    24223  root   Nov30  None  ...running
+evr-ccd1-l01257  08    27755  root   Nov30  None  ...running
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:52 preproductlinux.py [line:85] INFO /opt/IBM/ITM/bin/cinfo -o
+ 
+*********** Fri Dec  1 08:34:43 CET 2017 ******************
+User: root Groups: root
+Host name : evr-ccd1-l01257	 Installer Lvl:06.30.06.00
+CandleHome: /opt/IBM/ITM
+***********************************************************
+
+Product	Instance Name
+08	None (default primary)
+
+Product	Instance Name
+lz	None (default primary)
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:52 preproductlinux.py [line:163] INFO /opt/IBM/ITM/bin/cinfo -o
+ 
+*********** Fri Dec  1 08:34:43 CET 2017 ******************
+User: root Groups: root
+Host name : evr-ccd1-l01257	 Installer Lvl:06.30.06.00
+CandleHome: /opt/IBM/ITM
+***********************************************************
+
+Product	Instance Name
+08	None (default primary)
+
+Product	Instance Name
+lz	None (default primary)
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:57 preproductlinux.py [line:85] INFO ps -ef|grep BESClient --color=never
+root      5644     1  0 Nov30 ?        00:00:04 /opt/BESClient/bin/BESClient
+root     28530 27357  0 08:34 pts/0    00:00:00 grep --color=auto BESClient --color=never
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:34:57 preproductlinux.py [line:172] INFO ps -ef|grep BESClient --color=never
+root      5644     1  0 Nov30 ?        00:00:04 /opt/BESClient/bin/BESClient
+root     28530 27357  0 08:34 pts/0    00:00:00 grep --color=auto BESClient --color=never
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:35:02 preproductlinux.py [line:85] INFO /etc/init.d/besclient status
+BESClient (pid 5644) is running...
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:35:02 preproductlinux.py [line:175] INFO /etc/init.d/besclient status
+BESClient (pid 5644) is running...
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:35:07 preproductlinux.py [line:85] INFO cat /var/opt/BESClient/besclient.config
+
+[Software\BigFix\EnterpriseClient]
+EnterpriseClientFolder         = /opt/BESClient
+
+[Software\BigFix\EnterpriseClient\GlobalOptions]
+StoragePath                    = /var/opt/BESClient
+LibPath                        = /opt/BESClient/BESLib
+LastClientVersion              = 9.2.8.74
+ActionLockController           = console
+LastKnownClockShift            = 0
+RegCount                       = 377
+
+[Software\BigFix\EnterpriseClient\Settings\Client\C_Code]
+value                          = E064
+
+[Software\BigFix\EnterpriseClient\Settings\Client\GTS_DEVICE]
+value                          = SERVER
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__RelayServer1]
+value                          = http://146.89.183.34:52311/bfmirror/downloads/
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Register_Affiliation_SeekList]
+value                          = E064ALL
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Report_MinimumInterval]
+value                          = 300
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__RelaySelect_Automatic]
+value                          = 0
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Resource_WorkNormal]
+value                          = 10
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Resource_SleepNormal]
+value                          = 480
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__Relay_Control_RootServer]
+value                          = http://10.105.127.34:52311/cgi-bin/bfgather.exe/actionsite
+effective date                 = Fri,%2001%20Dec%202017%2008:32:31%20+0100
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__Relay_Control_Server1]
+value                          = http://146.89.183.34:52311
+effective date                 = Fri,%2001%20Dec%202017%2008:32:32%20+0100
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__Relay_Control_Server2]
+value                          = ""
+effective date                 = Fri,%2001%20Dec%202017%2008:32:32%20+0100
+
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:35:07 preproductlinux.py [line:178] INFO cat /var/opt/BESClient/besclient.config
+
+[Software\BigFix\EnterpriseClient]
+EnterpriseClientFolder         = /opt/BESClient
+
+[Software\BigFix\EnterpriseClient\GlobalOptions]
+StoragePath                    = /var/opt/BESClient
+LibPath                        = /opt/BESClient/BESLib
+LastClientVersion              = 9.2.8.74
+ActionLockController           = console
+LastKnownClockShift            = 0
+RegCount                       = 377
+
+[Software\BigFix\EnterpriseClient\Settings\Client\C_Code]
+value                          = E064
+
+[Software\BigFix\EnterpriseClient\Settings\Client\GTS_DEVICE]
+value                          = SERVER
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__RelayServer1]
+value                          = http://146.89.183.34:52311/bfmirror/downloads/
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Register_Affiliation_SeekList]
+value                          = E064ALL
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Report_MinimumInterval]
+value                          = 300
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__RelaySelect_Automatic]
+value                          = 0
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Resource_WorkNormal]
+value                          = 10
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Resource_SleepNormal]
+value                          = 480
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__Relay_Control_RootServer]
+value                          = http://10.105.127.34:52311/cgi-bin/bfgather.exe/actionsite
+effective date                 = Fri,%2001%20Dec%202017%2008:32:31%20+0100
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__Relay_Control_Server1]
+value                          = http://146.89.183.34:52311
+effective date                 = Fri,%2001%20Dec%202017%2008:32:32%20+0100
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__Relay_Control_Server2]
+value                          = ""
+effective date                 = Fri,%2001%20Dec%202017%2008:32:32%20+0100
+
+[root@evr-ccd1-l01257 ~]#
+2017-12-01 15:35:07 preproductlinux.py [line:65] INFO Connection to rundeck server closed.

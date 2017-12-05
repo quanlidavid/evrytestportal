@@ -1,0 +1,9 @@
+2017-12-01 14:59:08 preproductlinux.py [line:52] INFO Created connection to rundeck server: 146.213.160.116
+2017-12-01 14:59:09 preproductlinux.py [line:73] INFO Last login: Fri Dec  1 07:57:27 2017 from ilp-alfine.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+2017-12-01 14:59:14 preproductlinux.py [line:85] INFO [e214375@rundeckppr1 ~]$ export VAULT_ADDR=http://127.0.0.1:8200
+[e214375@rundeckppr1 ~]$
+2017-12-01 14:59:19 preproductlinux.py [line:85] INFO vault auth -method=ldap username=e214375
+Password (will be hidden):
+2017-12-01 14:59:19 preproductlinux.py [line:65] INFO Connection to rundeck server closed.

@@ -1,0 +1,209 @@
+2017-12-01 16:00:51 preproductlinux.py [line:52] INFO Created connection to rundeck server: 146.213.160.116
+2017-12-01 16:00:52 preproductlinux.py [line:73] INFO Last login: Fri Dec  1 08:54:57 2017 from ilp-alfine.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+2017-12-01 16:00:57 preproductlinux.py [line:85] INFO [e214375@rundeckppr1 ~]$ export VAULT_ADDR=http://127.0.0.1:8200
+[e214375@rundeckppr1 ~]$
+2017-12-01 16:01:02 preproductlinux.py [line:85] INFO vault auth -method=ldap username=e214375
+Password (will be hidden):
+2017-12-01 16:01:07 preproductlinux.py [line:85] INFO Successfully authenticated! You are now logged in.
+The token below is already saved in the session. You do not
+need to "vault auth" again with the token.
+token: b457ff74-2b91-0a05-c22d-0019c2162535
+token_duration: 2764799
+token_policies: [default testteam]
+[e214375@rundeckppr1 ~]$
+2017-12-01 16:01:12 preproductlinux.py [line:85] INFO vault read secret/OS/VMWare/EVR-NO-CCD1/test-vm-24025
+Key             	Value
+---             	-----
+refresh_interval	768h0m0s
+descritpion     	root
+password        	VK4jYuWQNCqoXQN6qClz
+
+[e214375@rundeckppr1 ~]$
+2017-12-01 16:01:13 preproductlinux.py [line:73] INFO Last login: Fri Dec  1 09:00:47 2017 from ilp-alfine.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+2017-12-01 16:01:18 preproductlinux.py [line:85] INFO [e214375@rundeckppr1 ~]$ ssh root@10.114.27.34
+The authenticity of host '10.114.27.34 (10.114.27.34)' can't be established.
+ECDSA key fingerprint is SHA256:mit/WLo+jEiVQpNk5+Ijj46PZKpKD62HtWX/tdJekiQ.
+ECDSA key fingerprint is MD5:2b:12:c7:8b:3e:eb:18:35:2e:03:cc:85:57:67:64:a5.
+Are you sure you want to continue connecting (yes/no)?
+2017-12-01 16:01:23 preproductlinux.py [line:85] INFO yes
+Warning: Permanently added '10.114.27.34' (ECDSA) to the list of known hosts.
+root@10.114.27.34's password:
+2017-12-01 16:01:28 preproductlinux.py [line:85] INFO [root@test-vm-24025 ~]#
+2017-12-01 16:01:33 preproductlinux.py [line:85] INFO hostname
+test-vm-24025.novalocal
+[root@test-vm-24025 ~]#
+2017-12-01 16:01:38 preproductlinux.py [line:85] INFO ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.114.27.34  netmask 255.255.255.192  broadcast 10.114.27.63
+        inet6 fe80::f816:3eff:fec1:1282  prefixlen 64  scopeid 0x20<link>
+        ether fa:16:3e:c1:12:82  txqueuelen 1000  (Ethernet)
+        RX packets 1198  bytes 122333 (119.4 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 808  bytes 74590 (72.8 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 6  bytes 416 (416.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 6  bytes 416 (416.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@test-vm-24025 ~]#
+2017-12-01 16:01:43 preproductlinux.py [line:85] INFO cat /proc/cpuinfo
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 79
+model name	: Intel(R) Xeon(R) CPU E5-2690 v4 @ 2.60GHz
+stepping	: 1
+microcode	: 0xb00001d
+cpu MHz		: 2599.944
+cache size	: 35840 KB
+physical id	: 0
+siblings	: 1
+core id		: 0
+cpu cores	: 1
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 invpcid rtm rdseed adx smap xsaveopt arat
+bogomips	: 5199.99
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 42 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 79
+model name	: Intel(R) Xeon(R) CPU E5-2690 v4 @ 2.60GHz
+stepping	: 1
+microcode	: 0xb00001d
+cpu MHz		: 2599.944
+cache size	: 35840 KB
+physical id	: 2
+siblings	: 1
+core id		: 0
+cpu cores	: 1
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 invpcid rtm rdseed adx smap xsaveopt arat
+bogomips	: 5199.99
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 42 bits physical, 48 bits virtual
+power management:
+
+[root@test-vm-24025 ~]#
+2017-12-01 16:01:48 preproductlinux.py [line:85] INFO free -h
+              total        used        free      shared  buff/cache   available
+Mem:           3.7G        135M        3.3G         16M        294M        3.3G
+Swap:            0B          0B          0B
+[root@test-vm-24025 ~]#
+2017-12-01 16:01:53 preproductlinux.py [line:85] INFO lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0  128G  0 disk 
+└─sda1   8:1    0  128G  0 part /
+[root@test-vm-24025 ~]#
+2017-12-01 16:01:58 preproductlinux.py [line:85] INFO timedatectl
+      Local time: Fri 2017-12-01 09:01:50 CET
+  Universal time: Fri 2017-12-01 08:01:50 UTC
+        RTC time: Fri 2017-12-01 08:01:50
+       Time zone: Europe/Oslo (CET, +0100)
+     NTP enabled: yes
+NTP synchronized: yes
+ RTC in local TZ: no
+      DST active: no
+ Last DST change: DST ended at
+                  Sun 2017-10-29 02:59:59 CEST
+                  Sun 2017-10-29 02:00:00 CET
+ Next DST change: DST begins (the clock jumps one hour forward) at
+                  Sun 2018-03-25 01:59:59 CET
+                  Sun 2018-03-25 03:00:00 CEST
+[root@test-vm-24025 ~]#
+2017-12-01 16:02:03 preproductlinux.py [line:85] INFO ping www.google.com -c 5
+PING www.google.com (216.58.209.132) 56(84) bytes of data.
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=1 ttl=49 time=9.58 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=2 ttl=49 time=9.36 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=3 ttl=49 time=9.24 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=4 ttl=49 time=9.58 ms
+64 bytes from arn09s05-in-f132.1e100.net (216.58.209.132): icmp_seq=5 ttl=49 time=9.93 ms
+
+--- www.google.com ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4005ms
+rtt min/avg/max/mdev = 9.242/9.541/9.931/0.258 ms
+[root@test-vm-24025 ~]#
+2017-12-01 16:02:08 preproductlinux.py [line:85] INFO ps -ef|grep ITM --color=never
+root     17932 17909  0 09:01 pts/0    00:00:00 grep --color=auto ITM --color=never
+[root@test-vm-24025 ~]#
+2017-12-01 16:02:13 preproductlinux.py [line:85] INFO /opt/IBM/ITM/bin/cinfo -r
+-bash: /opt/IBM/ITM/bin/cinfo: No such file or directory
+[root@test-vm-24025 ~]#
+2017-12-01 16:02:18 preproductlinux.py [line:85] INFO /opt/IBM/ITM/bin/cinfo -o
+-bash: /opt/IBM/ITM/bin/cinfo: No such file or directory
+[root@test-vm-24025 ~]#
+2017-12-01 16:02:23 preproductlinux.py [line:85] INFO ps -ef|grep BESClient --color=never
+root     17936 17909  0 09:02 pts/0    00:00:00 grep --color=auto BESClient --color=never
+[root@test-vm-24025 ~]#
+2017-12-01 16:02:28 preproductlinux.py [line:85] INFO /etc/init.d/besclient status
+-bash: /etc/init.d/besclient: No such file or directory
+[root@test-vm-24025 ~]#
+2017-12-01 16:02:33 preproductlinux.py [line:85] INFO cat /var/opt/BESClient/besclient.config
+cat: /var/opt/BESClient/besclient.config: No such file or directory
+[root@test-vm-24025 ~]#
+2017-12-01 16:02:33 preproductlinux.py [line:65] INFO Connection to rundeck server closed.
+2017-12-01 16:02:35 preproductlinux.py [line:52] INFO Created connection to rundeck server: 146.213.160.116
+2017-12-01 16:02:36 preproductlinux.py [line:73] INFO Last login: Fri Dec  1 09:01:09 2017 from ilp-alfine.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+2017-12-01 16:02:41 preproductlinux.py [line:85] INFO [e214375@rundeckppr1 ~]$ export VAULT_ADDR=http://127.0.0.1:8200
+[e214375@rundeckppr1 ~]$
+2017-12-01 16:02:46 preproductlinux.py [line:85] INFO vault auth -method=ldap username=e214375
+Password (will be hidden):
+2017-12-01 16:02:51 preproductlinux.py [line:85] INFO Successfully authenticated! You are now logged in.
+The token below is already saved in the session. You do not
+need to "vault auth" again with the token.
+token: 88c2ee50-584f-546f-42ed-d7cc8d11e10a
+token_duration: 2764800
+token_policies: [default testteam]
+[e214375@rundeckppr1 ~]$
+2017-12-01 16:02:56 preproductlinux.py [line:85] INFO vault read secret/OS/VMWare/EVR-NO-CCD1/evr-ccd1-l01178 [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K8
+Key             	Value
+---             	-----
+refresh_interval	768h0m0s
+descritpion     	root
+password        	DO6aAlR4vrpos9dRwhPf
+
+[e214375@rundeckppr1 ~]$
+2017-12-01 16:02:57 preproductlinux.py [line:73] INFO Last login: Fri Dec  1 09:02:32 2017 from ilp-alfine.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+2017-12-01 16:03:02 preproductlinux.py [line:85] INFO [e214375@rundeckppr1 ~]$ ssh root@10.114.28.45
+The authenticity of host '10.114.28.45 (10.114.28.45)' can't be established.
+ECDSA key fingerprint is SHA256:usWUaHbTVgjQv8x4OeGfWUcUujQ0ggMgC2hKIA4e6nU.
+ECDSA key fingerprint is MD5:b4:4c:48:f1:9d:e2:00:74:61:43:9f:cb:ce:bc:18:c7.
+Are you sure you want to continue connecting (yes/no)?
+2017-12-01 16:03:07 preproductlinux.py [line:85] INFO yes
+Warning: Permanently added '10.114.28.45' (ECDSA) to the list of known hosts.
+root@10.114.28.45's password:
+2017-12-01 16:03:12 preproductlinux.py [line:85] INFO Last login: Thu Nov 16 14:17:31 2017
+IBMs internal systems must only be used for conducting IBMs business or for purposes authorized by IBM management.
+[root@evr-ccd1-l01178 ~]#
+2017-12-01 16:03:17 preproductlinux.py [line:85] INFO hostname
+evr-ccd1-l01178.novalocal
+[root@evr-ccd1-l01178 ~]#

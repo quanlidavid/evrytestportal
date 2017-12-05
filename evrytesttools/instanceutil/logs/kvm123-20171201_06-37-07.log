@@ -1,0 +1,15 @@
+2017-12-01 14:37:15 linux.py [line:91] INFO ----
+Ms. Keane: Of all the days for the air conditioner to break!
+[e214375@ilp-elfy ~]$ ssh 146.213.160.182
+Last login: Mon Nov 27 08:48:53 2017 from ilp-elfy.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+
+[e214375@rundeckprod1 ~]$
+2017-12-01 14:37:15 linux.py [line:100] INFO Created channel to rundeck server: 146.213.160.182
+2017-12-01 14:37:20 linux.py [line:120] INFO sudo su - rundeck
+Last login: Thu Nov 30 21:24:24 CET 2017 from ilp-eldrun.unix.cosng.net on pts/0
+[rundeck@rundeckprod1 ~]$
+2017-12-01 14:37:25 linux.py [line:129] INFO ssh 139.112.21.191
+2017-12-01 14:37:30 linux.py [line:133] INFO hostname
+2017-12-01 14:37:35 linux.py [line:139] INFO ifconfig
