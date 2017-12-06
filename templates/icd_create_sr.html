@@ -1,0 +1,55 @@
+<!-- post.html -->
+{% extends 'base.html' %}
+{% load markdown_deux_tags %}
+{% block title %}
+Get SR info from ICD
+{% endblock %}
+{% block headmessage %}
+    <h3 style="font-family: 'Arial Black'">{{ post.title }}</h3>
+{% endblock %}
+{% block content %}
+    <form method="post" action=".">
+        <label>T-Shirt Size: </label>
+        <select name="tshirtsize_option">
+            <option value="small.1_OPTION" selected>small.1</option>
+            <option value="small.2_OPTION">small.2</option>
+            <option value="small.3_OPTION">small.3</option>
+            <option value="medium.1_OPTION">medium.1</option>
+            <option value="medium.2_OPTION">medium.2</option>
+            <option value="medium.3_OPTION">medium.3</option>
+            <option value="large.1_OPTION">large.1_OPTION</option>
+            <option value="large.2_OPTION">large.2_OPTION</option>
+        </select>
+        <br>
+        <label>Hypervisior: </label>
+        <select name="hypervisor_option">
+            <option value="VMWare_OPTION" selected>VMWare</option>
+            <option value="HyperV_OPTION">HyperV</option>
+        </select>
+        <br>
+        <label>Purpose of Service Request: </label> <input name="purposeofsr" type="text" value="Automation test"><br>
+        <label>Username: </label><input name="j_username" type="text" value="feilibj@cn.ibm.com"><br>
+        <label>Password: </label><input name="j_password" type="password" value="QAZqaz!@#123"><br>
+        <button id="btn" type="submit">Submit SR</button>
+        {% csrf_token %}
+    </form>
+
+    <p style="font-family: 'Arial Black';font-size: 12pt;letter-spacing: 2pt;">
+    <h3>SR info from ICD</h3>
+        <table border="1">
+            <tr><th>Result of Service Request Submit</th><td>{{ create_sr_info.srsubmitedinfo }}</td></tr>
+            <tr><th>Hypervisor</th><td>{{ create_sr_info.hypervisor }}</td></tr>
+            <tr><th>Operating System Version</th><td>{{ create_sr_info.operationsystem }}</td></tr>
+            <tr><th>Hostname</th><td>{{ create_sr_info.hostname }}</td></tr>
+            <tr><th>T-Shirt Size</th><td>{{ create_sr_info.tshirtsize }}</td></tr>
+            <tr><th>vCPUs</th><td>{{ create_sr_info.vcpusize }}</td></tr>
+            <tr><th>Memory Size (GB)</th><td>{{ create_sr_info.memsize }}</td></tr>
+            <tr><th>Customer</th><td>{{ create_sr_info.customer }}</td></tr>
+            <tr><th>Customer Name</th><td>{{ create_sr_info.customername }}</td></tr>
+            <tr><th>Security Zone</th><td>{{ create_sr_info.securityzone }}</td></tr>
+            <tr><th>Environment</th><td>{{ create_sr_info.environment }}</td></tr>
+            <tr><th>Service Level</th><td>{{ create_sr_info.servicelevel }}</td></tr>
+            <tr><th>Service Model</th><td>{{ create_sr_info.servicemodel }}</td></tr>
+        </table>
+    </p>
+{% endblock %}

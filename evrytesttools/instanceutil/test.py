@@ -34,3 +34,6 @@ print(str)
 
 str='sr5537'
 print(str.upper())
+
+str='5625'
+print('SR'+''.join(re.findall('\d+',str)))

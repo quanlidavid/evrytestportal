@@ -50,7 +50,8 @@ def get_sr_icd_info(srid, j_username, j_password):
 
 
 def get_sr_icd_info_attrs(srid, j_username, j_password):
-    srid = srid.upper()
+    srid = 'SR'+''.join(re.findall('\d+',srid))
+
     s = requests.Session()
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0',
@@ -142,15 +143,224 @@ def get_sr_icd_info_attrs(srid, j_username, j_password):
         cpusize = soup.find('td', text='EVRVCPUSIZE').parent.contents[7].text
     except Exception as e:
         cpusize = ''
+    try:
+        hypervisor = soup.find('td', text='ITDHYPERVISOR').parent.contents[7].text
+    except Exception as e:
+        hypervisor = ''
+
+    # logout
+    events = [{"type": "click", "targetId": "titlebar_hyperlink_7-lbsignout", "value": "", "requestType": "SYNC",
+               "csrftokenholder": csrftoken}]
+
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'titlebar_hyperlink_9-lbsignout', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+
     return {'sr': sr.text, 'summary': summary.text, 'classification_description': classification_description.text,
             'status': status.text, 'configuration_item_name': configuration_item_name.text, 'ip': ip,
             'hostname': hostname, 'customer': customer, 'disksize': disksize, 'memsize': memsize,
-            'virtualsize': virtualsize, 'cpusize': cpusize}
+            'virtualsize': virtualsize, 'cpusize': cpusize,'hypervisor':hypervisor}
+
+
+def sr_create_server(tshirtsize_option, hypervisor_option, purposeofsr, j_username, j_password):
+    s = requests.Session()
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Accept-Encoding': 'gzip, deflate'
+    }
+    # open home
+    r = s.get('https://10.180.19.18/maximo/webclient/login/login.jsp?appservauth=true', verify=False)
+
+    # login
+    soup = BeautifulSoup(r.text, 'html5lib')
+    loginstamp = soup.find('input', attrs={'name': 'loginstamp'})['value']
+
+    payload = {'allowinsubframe': 'null', 'j_password': j_password, 'j_username': j_username,
+               'localStorage': 'true', 'login': 'jsp', 'loginstamp': loginstamp, 'mobile': 'false'}
+
+    r = s.post('https://10.180.19.18/maximo/j_security_check', data=payload, headers=headers)
+
+    # open create linux dialog
+    soup = BeautifulSoup(r.text, 'html5lib')
+    csrftoken = soup.find('input', attrs={'name': 'csrftokenholder'})['value']
+    uisessionid = soup.find('input', attrs={'name': 'uisessionid'})['value']
+
+    events = [
+        {"type": "launchdialog", "targetId": "m87ab630e-srmnavigator_srmnavigatorctrl", "value": "EVRCCP1583,ITEMSET1",
+         "requestType": "SYNC", "csrftokenholder": csrftoken}]
+
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'm87ab630e-srmnavigator_srmnavigatorctrl', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+    soup = BeautifulSoup(r.text, 'html5lib')
+    item = soup.find('input', attrs={'id': 'm362ae120-tb'})['value']
+    customer = soup.find('input', attrs={'id': 'mcff97de2-sctextbox_textbox'})['value']
+    customername = soup.find('input', attrs={'id': 'mb8fe4d74-sctextbox_textbox'})['value']
+    disasterlevelclass = soup.find('input', attrs={'id': 'm269ad8d7-sccombobox_textbox'})['value']
+    hostname = soup.find('input', attrs={'id': 'madd01c7b-sctextbox_textbox'})['value']
+    operationsystem = soup.find('input', attrs={'id': 'm8f4b0393-sccombobox_textbox'})['value']
+    environment = soup.find('input', attrs={'id': 'm614562bf-sccombobox_textbox'})['value']
+    backup = soup.find('input', attrs={'id': 'm86fd4fb8-sccombobox_textbox'})['value']
+    servicelevel = soup.find('input', attrs={'id': 'm4d05f565-sccombobox_textbox'})['value']
+    servicemodel = soup.find('input', attrs={'id': 'm3d6f01ea-sctextbox_textbox'})['value']
+    retentionofbackup = soup.find('input', attrs={'id': 'mf1fa7f2e-sccombobox_textbox'})['value']
+    storegetier = soup.find('input', attrs={'id': 'm30720120-sccombobox_textbox'})['value']
+    serverbemanaged = soup.find('input', attrs={'id': 'md911a415-sccombobox_textbox'})['value']
+    hypervisor = soup.find('input', attrs={'id': 'mc767514d-sccombobox_textbox'})['value']
+
+    print(item)
+    print(customer)
+    print(customername)
+    print(hostname)
+    print(operationsystem)
+    print(disasterlevelclass)
+    print(environment)
+    print(backup)
+    print(servicelevel)
+    print(servicemodel)
+    print(retentionofbackup)
+    print(storegetier)
+    print(serverbemanaged)
+    print(hypervisor)
+
+    # open security zone dialog and select zone
+    events = [
+        {"type": "click", "targetId": "mdad72ced-sctextbox_detailbutton", "value": "ciname", "requestType": "SYNC",
+         "csrftokenholder": csrftoken}]
+
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'mdad72ced-sctextbox_textbox', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+
+    events = [{"type": "click", "targetId": "lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]", "value": "", "requestType": "SYNC",
+               "csrftokenholder": csrftoken}]
+
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+    soup = BeautifulSoup(r.text, "lxml-xml")
+    securityzone = BeautifulSoup(soup.text, 'html5lib').find('input', attrs={'id': 'mdad72ced-sctextbox_textbox'})[
+        'value']
+    print(securityzone)
+
+    # Select T-Shirt Size
+    events = [
+        {"type": "setvalue", "targetId": "m112f9630-sctextbox_textbox", "value": purposeofsr, "requestType": "ASYNC",
+         "csrftokenholder": csrftoken, "priority": 1},
+        {"type": "click", "targetId": "m785e53fe-sccombobox_dropimage", "value": "combobox",
+         "requestType": "SYNC",
+         "csrftokenholder": csrftoken}]
+
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'm785e53fe-sccombobox_textbox', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+
+    events = [{"type": "click", "targetId": "defaultDialogCR_menus", "value": tshirtsize_option, "requestType": "SYNC",
+               "csrftokenholder": csrftoken}]
+
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'm785e53fe-sccombobox_textbox', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+    soup = BeautifulSoup(r.text, "lxml-xml")
+    tshirtsize = BeautifulSoup(soup.text, 'html5lib').find('input', attrs={'id': 'm785e53fe-sccombobox_textbox'})[
+        'value']
+    vcpusize = BeautifulSoup(soup.text, 'html5lib').find('input', attrs={'id': 'mf596368-sccombobox_textbox'})['value']
+    memsize = BeautifulSoup(soup.text, 'html5lib').find('input', attrs={'id': 'me8e14e6f-sccombobox_textbox'})['value']
+    print(tshirtsize, vcpusize, memsize)
+
+    # select hypervior
+    if hypervisor_option != 'VMWare_OPTION':
+        events = [
+            {"type": "click", "targetId": "mc767514d-sccombobox_dropimage", "value": "combobox", "requestType": "SYNC",
+             "csrftokenholder": csrftoken}]
+        payload = {'csrftoken': csrftoken, 'currentfocus': 'mc767514d - sccombobox_textbox', 'requesttype': 'SYNC',
+                   'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+                   'uisessionid': uisessionid, 'events': str(events)}
+        r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+
+        events = [
+            {"type": "click", "targetId": "defaultDialogCR_menus", "value": hypervisor_option, "requestType": "SYNC",
+             "csrftokenholder": csrftoken}]
+        payload = {'csrftoken': csrftoken, 'currentfocus': 'mc767514d - sccombobox_textbox', 'requesttype': 'SYNC',
+                   'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+                   'uisessionid': uisessionid, 'events': str(events)}
+        r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+
+        soup = BeautifulSoup(r.text, "lxml-xml")
+        hypervisor = BeautifulSoup(soup.text, 'html5lib').find('input', attrs={'id': 'mc767514d-sccombobox_textbox'})[
+            'value']
+        print(hypervisor)
+
+    # Order now
+    events = [{"type": "click", "targetId": "m92ee8002-srmpushbutton_pushbutton", "value": "", "requestType": "SYNC",
+               "csrftokenholder": csrftoken}]
+
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'm92ee8002-srmpushbutton_pushbutton', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+    soup = BeautifulSoup(r.text, 'html5lib')
+    srsubmitedinfo = soup.find('label', attrs={'id': 'm3373ba3e-lb'}).text
+    print(srsubmitedinfo)
+
+    # logout
+    events = [{"type": "click", "targetId": "titlebar_hyperlink_7-lbsignout", "value": "", "requestType": "SYNC",
+               "csrftokenholder": csrftoken}]
+
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'm92ee8002-srmpushbutton_pushbutton', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+
+    return {'item': item, 'customer': customer, 'customername': customername, 'disasterlevelclass ': disasterlevelclass,
+            'hostname': hostname, 'operationsystem': operationsystem, 'environment': environment, 'backup'
+            : backup, 'servicelevel': servicelevel, 'servicemodel': servicemodel,
+            'retentionofbackup': retentionofbackup, 'storegetier': storegetier, 'serverbemanaged': serverbemanaged,
+            'hypervisor': hypervisor, 'securityzone': securityzone, 'tshirtsize': tshirtsize, 'vcpusize': vcpusize,
+            'memsize': memsize, 'srsubmitedinfo': srsubmitedinfo}
 
 
 if __name__ == '__main__':
-    # srid = 'SR5480'
-    # srid='SR5317'
-    info = get_sr_icd_info_attrs('SR5317', 'feilibj@cn.ibm.com', 'QAZqaz!@#123')
-    print(info['summary'])
-    print(get_sr_icd_info_attrs('SR5480', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    # print(sr_create_server("small.1_OPTION",'VMWare_OPTION','Automation test1','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("small.2_OPTION",'VMWare_OPTION','Automation test2','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("small.3_OPTION",'VMWare_OPTION','Automation test3','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("medium.1_OPTION",'VMWare_OPTION','Automation test4','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("medium.2_OPTION",'VMWare_OPTION','Automation test5','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("medium.3_OPTION",'VMWare_OPTION','Automation test6','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("large.1_OPTION",'VMWare_OPTION','Automation test7','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("large.2_OPTION",'VMWare_OPTION','Automation test8','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    # print(sr_create_server("small.1_OPTION", 'HyperV_OPTION', 'Automation test1', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("small.2_OPTION", 'HyperV_OPTION', 'Automation test9', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("small.3_OPTION", 'HyperV_OPTION', 'Automation test10', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("medium.1_OPTION", 'HyperV_OPTION', 'Automation test11', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("medium.2_OPTION", 'HyperV_OPTION', 'Automation test12', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("medium.3_OPTION", 'HyperV_OPTION', 'Automation test13', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("large.1_OPTION", 'HyperV_OPTION', 'Automation test14', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("large.2_OPTION", 'HyperV_OPTION', 'Automation test15', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+
+'''
+large.1_OPTION
+large.2_OPTION
+medium.1_OPTION
+medium.2_OPTION
+medium.3_OPTION
+small.1_OPTION
+small.2_OPTION
+small.3_OPTION
+'''
+'''HyperV_OPTION
+VMWare_OPTION
+'''
+#     # srid = 'SR5480'
+#     # srid='SR5317'
+#     info = get_sr_icd_info_attrs('SR5317', 'feilibj@cn.ibm.com', 'QAZqaz!@#123')
+#     print(info['summary'])
+#     print(get_sr_icd_info_attrs('SR5480', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
