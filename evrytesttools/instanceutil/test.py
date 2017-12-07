@@ -37,3 +37,6 @@ print(str.upper())
 
 str='5625'
 print('SR'+''.join(re.findall('\d+',str)))
+
+t1={'aaa':111,'bbb':222}
+print(t1['aaa'])

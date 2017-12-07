@@ -2,23 +2,32 @@
 {% extends 'base.html' %}
 {% load markdown_deux_tags %}
 {% block title %}
-Get SR info from ICD
+Query SR info from ICD
 {% endblock %}
 {% block headmessage %}
     <h3 style="font-family: 'Arial Black'">{{ post.title }}</h3>
 {% endblock %}
 {% block content %}
     <form method="post" action=".">
-        <label>Service Request Id: </label> <input name="srid" type="text"><br>
-        <label>Username: </label><input name="j_username" type="text" value="feilibj@cn.ibm.com"><br>
-        <label>Password: </label><input name="j_password" type="password" value="QAZqaz!@#123"><br>
-        <button id="btn" type="submit">Get Info</button>
-        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="srid">Service Request Id:</label>
+                <input type="text" class="form-control" id="srid" name="srid" >
+            </div>
+            <div class="form-group col-md-4">
+                <label for="j_username">Username:</label>
+                <input type="email" class="form-control" id="j_username" name="j_username" value="feilibj@cn.ibm.com">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="j_password">Password:</label>
+                <input type="password" class="form-control" id="j_password" name="j_password" value="QAZqaz!@#123">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Query SR</button>
+    {% csrf_token %}
     </form>
-
-    <p style="font-family: 'Arial Black';font-size: 12pt;letter-spacing: 2pt;">
-    <h3>SR info from ICD</h3>
-        <table border="1">
+        <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+        <caption><h3>SR info from ICD</h3></caption>
             <tr><th>Service Request Id</th><td>{{ sr_icd_info.sr }}</td></tr>
             <tr><th>Summary</th><td>{{ sr_icd_info.summary }}</td></tr>
             <tr><th>Classification Description</th><td>{{ sr_icd_info.classification_description }}</td></tr>
@@ -33,5 +42,9 @@ Get SR info from ICD
             <tr><th>EVRVCPUSIZE(cpusize)</th><td>{{ sr_icd_info.cpusize }}</td></tr>
             <tr><th>ITDHYPERVISOR</th><td>{{ sr_icd_info.hypervisor }}</td></tr>
         </table>
-    </p>
+{#        <table class="table table-bordered table-sm" style="font-size: 8pt">#}
+{#        <caption>SR info from ICD</caption>#}
+{#		<thead class="thead-light"><tr><th>Service Request Id</th><th>Summary</th><th>Classification Description</th><th>Status</th><th>Configuration Item Name</th><th>ITDIPADDRESS_EP (ip)</th><th>ITDHOSTNAME (hostname)</th><th>ITDDISK0SIZE (disksize)</th><th>ITDMEMORY (memsize)</th><th>EVRVIRTUALSIZE (virtualsize)</th><th>EVRVCPUSIZE (cpusize)</th><th>ITDHYPERVISOR</th><th>ITDCUSTOMER (customer)</th></tr></thead>#}
+{#        <tbody><tr class="table-success"><td>{{ sr_icd_info.sr }}</td><td>{{ sr_icd_info.summary }}</td><td>{{ sr_icd_info.classification_description }}</td><td>{{ sr_icd_info.status }}</td><td>{{ sr_icd_info.configuration_item_name }}</td><td>{{ sr_icd_info.ip }}</td><td>{{ sr_icd_info.hostname }}</td><td>{{ sr_icd_info.disksize }}</td><td>{{ sr_icd_info.memsize }}</td><td>{{ sr_icd_info.virtualsize }}</td><td>{{ sr_icd_info.cpusize }}</td><td>{{ sr_icd_info.hypervisor }}</td><td>{{ sr_icd_info.customer }}</td></tr></tbody>#}
+{#        </table>#}
 {% endblock %}

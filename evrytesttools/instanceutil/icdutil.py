@@ -59,20 +59,21 @@ def get_sr_icd_info_attrs(srid, j_username, j_password):
         'Accept-Language': 'en-US,en;q=0.5',
         'Accept-Encoding': 'gzip, deflate'
     }
+    #login page
     r = s.get('https://10.180.19.18/maximo/webclient/login/login.jsp?appservauth=true', verify=False)
     soup = BeautifulSoup(r.text, 'html5lib')
     loginstamp = soup.find('input', attrs={'name': 'loginstamp'})['value']
 
-    # s.headers.update({'Referer': 'https://10.180.19.18/maximo/webclient/login/login.jsp?appservauth=true'})
-
     payload = {'allowinsubframe': 'null', 'j_password': j_password, 'j_username': j_username,
                'localStorage': 'true', 'login': 'jsp', 'loginstamp': loginstamp, 'mobile': 'false'}
-
+    #login
     r = s.post('https://10.180.19.18/maximo/j_security_check', data=payload, headers=headers)
 
     soup = BeautifulSoup(r.text, 'html5lib')
     csrftoken = soup.find('input', attrs={'name': 'csrftokenholder'})['value']
     uisessionid = soup.find('input', attrs={'name': 'uisessionid'})['value']
+
+    #view requests
     r = s.get(
         'https://10.180.19.18/maximo/ui/?event=loadapp&value=viewsr&uisessionid=' + uisessionid + '&csrftoken=' + csrftoken)
     soup = BeautifulSoup(r.text, 'html5lib')
@@ -110,6 +111,7 @@ def get_sr_icd_info_attrs(srid, j_username, j_password):
     soup = BeautifulSoup(r.text, 'html5lib')
     href = soup.find('a', attrs={'id': 'm3b660ada-lb4'})['href']
     url = ''.join(re.findall(r'"(.*)"', href))
+    #get attributes
     r = s.get(url)
 
     soup = BeautifulSoup(r.text, 'html5lib')
@@ -163,7 +165,7 @@ def get_sr_icd_info_attrs(srid, j_username, j_password):
             'virtualsize': virtualsize, 'cpusize': cpusize,'hypervisor':hypervisor}
 
 
-def sr_create_server(tshirtsize_option, hypervisor_option, purposeofsr, j_username, j_password):
+def sr_create_server(tshirtsize_option, hypervisor_option, security_zone, purposeofsr, j_username, j_password):
     s = requests.Session()
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0',
@@ -237,10 +239,10 @@ def sr_create_server(tshirtsize_option, hypervisor_option, purposeofsr, j_userna
                'uisessionid': uisessionid, 'events': str(events)}
     r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
 
-    events = [{"type": "click", "targetId": "lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]", "value": "", "requestType": "SYNC",
+    events = [{"type": "click", "targetId": security_zone, "value": "", "requestType": "SYNC",
                "csrftokenholder": csrftoken}]
 
-    payload = {'csrftoken': csrftoken, 'currentfocus': 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]', 'requesttype': 'SYNC',
+    payload = {'csrftoken': csrftoken, 'currentfocus': security_zone, 'requesttype': 'SYNC',
                'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
                'uisessionid': uisessionid, 'events': str(events)}
     r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
@@ -274,7 +276,9 @@ def sr_create_server(tshirtsize_option, hypervisor_option, purposeofsr, j_userna
         'value']
     vcpusize = BeautifulSoup(soup.text, 'html5lib').find('input', attrs={'id': 'mf596368-sccombobox_textbox'})['value']
     memsize = BeautifulSoup(soup.text, 'html5lib').find('input', attrs={'id': 'me8e14e6f-sccombobox_textbox'})['value']
-    print(tshirtsize, vcpusize, memsize)
+    print(tshirtsize)
+    print(vcpusize)
+    print(memsize)
 
     # select hypervior
     if hypervisor_option != 'VMWare_OPTION':
@@ -329,22 +333,22 @@ def sr_create_server(tshirtsize_option, hypervisor_option, purposeofsr, j_userna
 
 
 if __name__ == '__main__':
-    # print(sr_create_server("small.1_OPTION",'VMWare_OPTION','Automation test1','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("small.2_OPTION",'VMWare_OPTION','Automation test2','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("small.3_OPTION",'VMWare_OPTION','Automation test3','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("medium.1_OPTION",'VMWare_OPTION','Automation test4','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("medium.2_OPTION",'VMWare_OPTION','Automation test5','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("medium.3_OPTION",'VMWare_OPTION','Automation test6','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("large.1_OPTION",'VMWare_OPTION','Automation test7','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("large.2_OPTION",'VMWare_OPTION','Automation test8','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    # print(sr_create_server("small.1_OPTION", 'HyperV_OPTION', 'Automation test1', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("small.2_OPTION", 'HyperV_OPTION', 'Automation test9', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("small.3_OPTION", 'HyperV_OPTION', 'Automation test10', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("medium.1_OPTION", 'HyperV_OPTION', 'Automation test11', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("medium.2_OPTION", 'HyperV_OPTION', 'Automation test12', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("medium.3_OPTION", 'HyperV_OPTION', 'Automation test13', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("large.1_OPTION", 'HyperV_OPTION', 'Automation test14', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("large.2_OPTION", 'HyperV_OPTION', 'Automation test15', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("small.1_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test1','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("small.2_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test2','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("small.3_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test3','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("medium.1_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test4','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("medium.2_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test5','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("medium.3_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test6','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("large.1_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test7','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("large.2_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test8','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    print(sr_create_server("small.1_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test1', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("small.2_OPTION", 'HyperV_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]', 'Automation test9', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("small.3_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test10', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("medium.1_OPTION", 'HyperV_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]', 'Automation test11', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("medium.2_OPTION", 'HyperV_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]', 'Automation test12', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("medium.3_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test13', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("large.1_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test14', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(sr_create_server("large.2_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test15', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
 
 '''
 large.1_OPTION
@@ -358,6 +362,22 @@ small.3_OPTION
 '''
 '''HyperV_OPTION
 VMWare_OPTION
+
+HyperV
+VMWare
+'''
+'''
+lookup_page2_tdrow_[C:1]_ttxt-lb[R:0]
+lookup_page2_tdrow_[C:1]_ttxt-lb[R:1]
+lookup_page2_tdrow_[C:1]_ttxt-lb[R:2]
+lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]
+lookup_page2_tdrow_[C:1]_ttxt-lb[R:4]
+
+LS-EVR-NO-CCD1-CONF-SECU1
+LS-EVR-NO-CCD1-CONF-FRON1
+LS-EVR-NO-CCD1-PUBL-FRON1
+LS-EVR-NO-CCD1-PUBL-PROT1
+LS-EVR-NO-CCD1-CONF-PROT1
 '''
 #     # srid = 'SR5480'
 #     # srid='SR5317'

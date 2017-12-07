@@ -2,7 +2,8 @@ from django.template.loader import get_template
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
-from evrytesttools.instanceutil.icdutil import get_sr_icd_info_attrs,sr_create_server
+from evrytesttools.instanceutil.icdutil import get_sr_icd_info_attrs, sr_create_server
+from evrytesttools.models import QuerySRRecord
 
 
 # Create your views here.
@@ -23,8 +24,11 @@ def icd_page(request):
     if srid != None and j_username != None and j_password != None:
         if srid != '' and j_username != '' and j_password != '':
             sr_icd_info = get_sr_icd_info_attrs(srid, j_username, j_password)
+            qsr = QuerySRRecord.objects.create_QuerySRRecord(sr_icd_info)
+            qsr.save()
     html = template.render(locals())
     return HttpResponse(html)
+
 
 def icd_create_sr_page(request):
     template = get_template('icd_create_sr.html')
@@ -32,10 +36,12 @@ def icd_create_sr_page(request):
     j_username = request.POST.get('j_username')
     j_password = request.POST.get('j_password')
     tshirtsize_option = request.POST.get('tshirtsize_option')
+    security_zone = request.POST.get('security_zone')
     hypervisor_option = request.POST.get('hypervisor_option')
     purposeofsr = request.POST.get('purposeofsr')
     if j_username != None and j_password != None:
         if j_username != '' and j_password != '':
-            create_sr_info = sr_create_server(tshirtsize_option,hypervisor_option,purposeofsr,j_username,j_password)
+            create_sr_info = sr_create_server(tshirtsize_option, hypervisor_option, security_zone, purposeofsr,
+                                              j_username, j_password)
     html = template.render(locals())
     return HttpResponse(html)

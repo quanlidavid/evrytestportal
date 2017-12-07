@@ -2,8 +2,30 @@
 {% extends 'base.html' %}
 {% block title %}Evry Test Portal{% endblock %}
 {% block headmessage %}
-    <h3 style="font-family: 'Arial Black'">Tools</h3>
+    <h3 style="font-family: 'Arial Black'">...</h3>
 {% endblock %}
 {% block content %}
-    <a href="icd">Query SR info from ICD</a>
+    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+        <tr>
+            <th>Tools for ICD</th>
+            <td><a href="/evrytestportal/icd_create_sr">Create SR - Linux
+                Provision</a><br><a href="icd">Query SR info from ICD</a></td>
+        </tr>
+        <tr>
+            <th>Tools for VIO</th>
+            <td><a href="/evrytestportal/">Not ready</a><br><a href="icd">Not ready</a></td>
+        </tr>
+        <tr>
+            <th>Tools for Rundeck</th>
+            <td><a href="/evrytestportal/">Not ready</a><br><a href="icd">Not ready</a></td>
+        </tr>
+    </table>
+
+
 {% endblock %}
+
+{#            <div class="list-group">#}
+{#                <a href="/evrytestportal/icd_create_sr" class="list-group-item list-group-item-action">Create SR - Linux#}
+{#                    Provision</a>#}
+{#                <a href="icd" class="list-group-item list-group-item-action">Query SR info from ICD</a>#}
+{#            </div>#}

@@ -2,16 +2,20 @@
 {% extends 'base.html' %}
 {% load markdown_deux_tags %}
 {% block title %}
-Get SR info from ICD
+Create SR - Linux Provision
 {% endblock %}
 {% block headmessage %}
     <h3 style="font-family: 'Arial Black'">{{ post.title }}</h3>
 {% endblock %}
 {% block content %}
-    <form method="post" action=".">
-        <label>T-Shirt Size: </label>
-        <select name="tshirtsize_option">
-            <option value="small.1_OPTION" selected>small.1</option>
+
+
+<form method="post" action=".">
+    <div class="form-row">
+    <div class="form-group col-md-3">
+        <label for="tshirtsize_option">T-Shirt Size: </label>
+        <select class="custom-select" id="tshirtsize_option" name="tshirtsize_option">
+            <option value="small.1_OPTION" selected="selected">small.1</option>
             <option value="small.2_OPTION">small.2</option>
             <option value="small.3_OPTION">small.3</option>
             <option value="medium.1_OPTION">medium.1</option>
@@ -20,23 +24,45 @@ Get SR info from ICD
             <option value="large.1_OPTION">large.1_OPTION</option>
             <option value="large.2_OPTION">large.2_OPTION</option>
         </select>
-        <br>
-        <label>Hypervisior: </label>
-        <select name="hypervisor_option">
-            <option value="VMWare_OPTION" selected>VMWare</option>
-            <option value="HyperV_OPTION">HyperV</option>
+        </div>
+            <div class="form-group col-md-3">
+            <label for="hypervisor_option">Hypervisior: </label>
+            <select class="custom-select" id="hypervisor_option" name="hypervisor_option">
+                <option value="VMWare_OPTION" selected="selected">VMWare</option>
+                <option value="HyperV_OPTION">HyperV</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+        <label for="security_zone">Security Zone: </label>
+        <select class="custom-select" id="security_zone" name="security_zone">
+            <option value="lookup_page2_tdrow_[C:1]_ttxt-lb[R:0]" >LS-EVR-NO-CCD1-CONF-SECU1</option>
+            <option value="lookup_page2_tdrow_[C:1]_ttxt-lb[R:1]">LS-EVR-NO-CCD1-CONF-FRON1</option>
+            <option value="lookup_page2_tdrow_[C:1]_ttxt-lb[R:2]" >LS-EVR-NO-CCD1-PUBL-FRON1</option>
+            <option value="lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]" selected>LS-EVR-NO-CCD1-PUBL-PROT1</option>
+            <option value="lookup_page2_tdrow_[C:1]_ttxt-lb[R:4]">LS-EVR-NO-CCD1-CONF-PROT1</option>
         </select>
-        <br>
-        <label>Purpose of Service Request: </label> <input name="purposeofsr" type="text" value="Automation test"><br>
-        <label>Username: </label><input name="j_username" type="text" value="feilibj@cn.ibm.com"><br>
-        <label>Password: </label><input name="j_password" type="password" value="QAZqaz!@#123"><br>
-        <button id="btn" type="submit">Submit SR</button>
-        {% csrf_token %}
+        </div>
+    </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="purposeofsr">Purpose of Service Request:</label>
+                <input type="text" class="form-control" id="purposeofsr" name="purposeofsr" value="Automation test">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="j_username">Username:</label>
+                <input type="email" class="form-control" id="j_username" name="j_username" value="feilibj@cn.ibm.com">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="j_password">Password:</label>
+                <input type="password" class="form-control" id="j_password" name="j_password" value="QAZqaz!@#123">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit SR</button>
+    {% csrf_token %}
     </form>
 
-    <p style="font-family: 'Arial Black';font-size: 12pt;letter-spacing: 2pt;">
-    <h3>SR info from ICD</h3>
-        <table border="1">
+        <table class="table-striped table table-bordered table-sm" >
+        <caption>SR info when created in ICD</caption>
             <tr><th>Result of Service Request Submit</th><td>{{ create_sr_info.srsubmitedinfo }}</td></tr>
             <tr><th>Hypervisor</th><td>{{ create_sr_info.hypervisor }}</td></tr>
             <tr><th>Operating System Version</th><td>{{ create_sr_info.operationsystem }}</td></tr>
@@ -51,5 +77,5 @@ Get SR info from ICD
             <tr><th>Service Level</th><td>{{ create_sr_info.servicelevel }}</td></tr>
             <tr><th>Service Model</th><td>{{ create_sr_info.servicemodel }}</td></tr>
         </table>
-    </p>
+
 {% endblock %}
