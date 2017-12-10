@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from datetime import datetime
 from evrytesttools.instanceutil.icdutil import get_sr_icd_info_attrs, sr_create_server
 from evrytesttools.models import QuerySRRecord
+from evrytesttools.vpnutil import slvpn
 
 
 # Create your views here.
@@ -23,6 +24,7 @@ def icd_page(request):
     j_password = request.POST.get('j_password')
     if srid != None and j_username != None and j_password != None:
         if srid != '' and j_username != '' and j_password != '':
+            slvpn.connectslvpn()
             sr_icd_info = get_sr_icd_info_attrs(srid, j_username, j_password)
             qsr = QuerySRRecord.objects.create_QuerySRRecord(sr_icd_info)
             qsr.save()
@@ -41,6 +43,7 @@ def icd_create_sr_page(request):
     purposeofsr = request.POST.get('purposeofsr')
     if j_username != None and j_password != None:
         if j_username != '' and j_password != '':
+            slvpn.connectslvpn()
             create_sr_info = sr_create_server(tshirtsize_option, hypervisor_option, security_zone, purposeofsr,
                                               j_username, j_password)
     html = template.render(locals())
