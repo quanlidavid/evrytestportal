@@ -50,7 +50,7 @@ def get_sr_icd_info(srid, j_username, j_password):
 
 
 def get_sr_icd_info_attrs(srid, j_username, j_password):
-    srid = 'SR'+''.join(re.findall('\d+',srid))
+    srid = 'SR' + ''.join(re.findall('\d+', srid))
 
     s = requests.Session()
     headers = {
@@ -59,21 +59,21 @@ def get_sr_icd_info_attrs(srid, j_username, j_password):
         'Accept-Language': 'en-US,en;q=0.5',
         'Accept-Encoding': 'gzip, deflate'
     }
-    #login page
+    # login page
     r = s.get('https://10.180.19.18/maximo/webclient/login/login.jsp?appservauth=true', verify=False)
     soup = BeautifulSoup(r.text, 'html5lib')
     loginstamp = soup.find('input', attrs={'name': 'loginstamp'})['value']
 
     payload = {'allowinsubframe': 'null', 'j_password': j_password, 'j_username': j_username,
                'localStorage': 'true', 'login': 'jsp', 'loginstamp': loginstamp, 'mobile': 'false'}
-    #login
+    # login
     r = s.post('https://10.180.19.18/maximo/j_security_check', data=payload, headers=headers)
 
     soup = BeautifulSoup(r.text, 'html5lib')
     csrftoken = soup.find('input', attrs={'name': 'csrftokenholder'})['value']
     uisessionid = soup.find('input', attrs={'name': 'uisessionid'})['value']
 
-    #view requests
+    # view requests
     r = s.get(
         'https://10.180.19.18/maximo/ui/?event=loadapp&value=viewsr&uisessionid=' + uisessionid + '&csrftoken=' + csrftoken)
     soup = BeautifulSoup(r.text, 'html5lib')
@@ -111,7 +111,7 @@ def get_sr_icd_info_attrs(srid, j_username, j_password):
     soup = BeautifulSoup(r.text, 'html5lib')
     href = soup.find('a', attrs={'id': 'm3b660ada-lb4'})['href']
     url = ''.join(re.findall(r'"(.*)"', href))
-    #get attributes
+    # get attributes
     r = s.get(url)
 
     soup = BeautifulSoup(r.text, 'html5lib')
@@ -162,7 +162,7 @@ def get_sr_icd_info_attrs(srid, j_username, j_password):
     return {'sr': sr.text, 'summary': summary.text, 'classification_description': classification_description.text,
             'status': status.text, 'configuration_item_name': configuration_item_name.text, 'ip': ip,
             'hostname': hostname, 'customer': customer, 'disksize': disksize, 'memsize': memsize,
-            'virtualsize': virtualsize, 'cpusize': cpusize,'hypervisor':hypervisor}
+            'virtualsize': virtualsize, 'cpusize': cpusize, 'hypervisor': hypervisor}
 
 
 def sr_create_server(tshirtsize_option, hypervisor_option, security_zone, purposeofsr, j_username, j_password):
@@ -332,24 +332,125 @@ def sr_create_server(tshirtsize_option, hypervisor_option, security_zone, purpos
             'memsize': memsize, 'srsubmitedinfo': srsubmitedinfo}
 
 
-if __name__ == '__main__':
-    print(sr_create_server("small.1_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test1','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("small.2_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test2','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("small.3_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test3','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("medium.1_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test4','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("medium.2_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test5','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("medium.3_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test6','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("large.1_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test7','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("large.2_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test8','feilibj@cn.ibm.com','QAZqaz!@#123'))
-    print(sr_create_server("small.1_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test1', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("small.2_OPTION", 'HyperV_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]', 'Automation test9', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("small.3_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test10', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("medium.1_OPTION", 'HyperV_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]', 'Automation test11', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("medium.2_OPTION", 'HyperV_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]', 'Automation test12', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("medium.3_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test13', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("large.1_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test14', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
-    print(sr_create_server("large.2_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test15', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+def get_cmdb_icd_info_spec(hostname, j_username, j_password):
+    s = requests.Session()
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Accept-Encoding': 'gzip, deflate'
+    }
+    # login page
+    r = s.get('https://10.180.19.18/maximo/webclient/login/login.jsp?appservauth=true', verify=False)
+    soup = BeautifulSoup(r.text, 'html5lib')
+    loginstamp = soup.find('input', attrs={'name': 'loginstamp'})['value']
 
+    payload = {'allowinsubframe': 'null', 'j_password': j_password, 'j_username': j_username,
+               'localStorage': 'true', 'login': 'jsp', 'loginstamp': loginstamp, 'mobile': 'false'}
+    # login
+    r = s.post('https://10.180.19.18/maximo/j_security_check', data=payload, headers=headers)
+
+    soup = BeautifulSoup(r.text, 'html5lib')
+    csrftoken = soup.find('input', attrs={'name': 'csrftokenholder'})['value']
+    uisessionid = soup.find('input', attrs={'name': 'uisessionid'})['value']
+
+    # configuration items
+    events = [{"type": "changeapp", "targetId": "titlebar-tb_gotoButton", "value": "CI", "requestType": "SYNC",
+               "csrftokenholder": csrftoken}]
+
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'm87ab630e - srmnavigator_srmnavigatorctrl',
+               'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+    r = s.get(
+        'https://10.180.19.18/maximo/ui/?event=loadapp&value=ci&uisessionid=' + uisessionid + '&csrftoken=' + csrftoken)
+
+    # filter
+    events = [{"type": "setvalue", "targetId": "m6a7dfd2f_tfrow_[C:1]_txt-tb", "value": hostname,
+               "requestType": "ASYNC", "csrftokenholder": csrftoken, "priority": 1},
+              {"type": "setvalue", "targetId": "m6a7dfd2f_tfrow_[C:7]_txt-tb", "value": "y", "requestType": "ASYNC",
+               "csrftokenholder": csrftoken, "priority": 1},
+              {"type": "filterrows", "targetId": "m6a7dfd2f_tbod_tfrow-tr", "value": "", "requestType": "SYNC",
+               "csrftokenholder": csrftoken}]
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'm6a7dfd2f_tfrow_[C:7]_txt-tb', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+
+    # configuration item
+    events = [{"type": "click", "targetId": "m6a7dfd2f_tdrow_[C:1]_ttxt-lb[R:0]", "value": "", "requestType": "SYNC",
+               "csrftokenholder": csrftoken}]
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'm6a7dfd2f_tdrow_[C:1]_ttxt - lb[R:0]', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+
+    # ci details
+    events = [{"type": "click", "targetId": "mbf28cd64-tab", "value": "", "requestType": "SYNC",
+               "csrftokenholder": csrftoken}]
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'm98d76e99 - tb', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+    soup = BeautifulSoup(r.text, 'html5lib')
+    href = soup.find('a', attrs={'id': 'mb47137f1-lb4'})['href']
+    url = ''.join(re.findall(r'"(.*)"', href))
+
+    # get attributes
+    r = s.get(url)
+
+    soup = BeautifulSoup(r.text, 'html5lib')
+
+    try:
+        name = soup.find('td', text='COMPUTERSYSTEM_NAME').parent.contents[3].text
+    except Exception as e:
+        name = ''
+    try:
+        memorysize = soup.find('td', text='COMPUTERSYSTEM_MEMORYSIZE').parent.contents[3].text + \
+                     soup.find('td', text='COMPUTERSYSTEM_MEMORYSIZE').parent.contents[5].text
+    except Exception as e:
+        memorysize = ''
+    try:
+        tshirtsize = soup.find('td', text='COMPUTERSYSTEM_TSHIRTSIZE').parent.contents[3].text
+    except Exception as e:
+        tshirtsize = ''
+    try:
+        numcpus = soup.find('td', text='COMPUTERSYSTEM_NUMCPUS').parent.contents[3].text
+    except Exception as e:
+        numcpus = ''
+
+    # logout
+    events = [{"type": "click", "targetId": "titlebar_hyperlink_7-lbsignout", "value": "", "requestType": "SYNC",
+               "csrftokenholder": csrftoken}]
+
+    payload = {'csrftoken': csrftoken, 'currentfocus': 'titlebar_hyperlink_9-lbsignout', 'requesttype': 'SYNC',
+               'localStorage': 'true', 'responsetype': 'text/xml', 'scrollleftpos': 0, 'scrolltoppos': 0,
+               'uisessionid': uisessionid, 'events': str(events)}
+    r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
+
+    return {'hostname': hostname, 'name': name, 'memorysize': memorysize, 'tshirtsize': tshirtsize,
+            'numcpus': numcpus}
+
+
+if __name__ == '__main__':
+    # print(sr_create_server("small.1_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test1','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    # print(sr_create_server("small.2_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test2','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    # print(sr_create_server("small.3_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test3','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    # print(sr_create_server("medium.1_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test4','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    # print(sr_create_server("medium.2_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test5','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    # print(sr_create_server("medium.3_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test6','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    # print(sr_create_server("large.1_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test7','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    # print(sr_create_server("large.2_OPTION",'VMWare_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test8','feilibj@cn.ibm.com','QAZqaz!@#123'))
+    # print(sr_create_server("small.1_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test1', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    # print(sr_create_server("small.2_OPTION", 'HyperV_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]', 'Automation test9', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    # print(sr_create_server("small.3_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test10', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    # print(sr_create_server("medium.1_OPTION", 'HyperV_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]', 'Automation test11', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    # print(sr_create_server("medium.2_OPTION", 'HyperV_OPTION','lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]', 'Automation test12', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    # print(sr_create_server("medium.3_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test13', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    # print(sr_create_server("large.1_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test14', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    # print(sr_create_server("large.2_OPTION", 'HyperV_OPTION', 'lookup_page2_tdrow_[C:1]_ttxt-lb[R:3]','Automation test15', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
+    print(get_cmdb_icd_info_spec('EVR-CCD1-L01322', 'feilibj@cn.ibm.com', 'QAZqaz!@#123'))
 '''
 large.1_OPTION
 large.2_OPTION
