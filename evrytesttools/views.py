@@ -2,8 +2,8 @@ from django.template.loader import get_template
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
-from evrytesttools.instanceutil.icdutil import get_sr_icd_info_attrs, sr_create_server
-from evrytesttools.models import QuerySRRecord
+from evrytesttools.instanceutil.icdutil import get_sr_icd_info_attrs, sr_create_server_linux,get_cmdb_icd_info_spec
+from evrytesttools.models import QuerySRRecord,QueryCMDBRecord,SRCreateServerLinuxRecord
 from evrytesttools.vpnutil import slvpn
 
 
@@ -16,8 +16,8 @@ def homepage(request):
     return HttpResponse(html)
 
 
-def icd_page(request):
-    template = get_template('icd.html')
+def icd_sr_page(request):
+    template = get_template('icd_sr.html')
     now = datetime.now()
     srid = request.POST.get('srid')
     j_username = request.POST.get('j_username')
@@ -31,9 +31,23 @@ def icd_page(request):
     html = template.render(locals())
     return HttpResponse(html)
 
+def icd_cmdb_page(request):
+    template = get_template('icd_cmdb.html')
+    now = datetime.now()
+    hostname = request.POST.get('hostname')
+    j_username = request.POST.get('j_username')
+    j_password = request.POST.get('j_password')
+    if hostname != None and j_username != None and j_password != None:
+        if hostname != '' and j_username != '' and j_password != '':
+            slvpn.connectslvpn()
+            sr_cmdb_info = get_cmdb_icd_info_spec(hostname, j_username, j_password)
+            qcmdb = QueryCMDBRecord.objects.create_QueryCMDBRecord(sr_cmdb_info)
+            qcmdb.save()
+    html = template.render(locals())
+    return HttpResponse(html)
 
-def icd_create_sr_page(request):
-    template = get_template('icd_create_sr.html')
+def icd_create_linux_sr_page(request):
+    template = get_template('icd_create_linux_sr.html')
     now = datetime.now()
     j_username = request.POST.get('j_username')
     j_password = request.POST.get('j_password')
@@ -44,7 +58,21 @@ def icd_create_sr_page(request):
     if j_username != None and j_password != None:
         if j_username != '' and j_password != '':
             slvpn.connectslvpn()
-            create_sr_info = sr_create_server(tshirtsize_option, hypervisor_option, security_zone, purposeofsr,
-                                              j_username, j_password)
+            create_linux_sr_info = sr_create_server_linux(tshirtsize_option, hypervisor_option, security_zone, purposeofsr,
+                                                    j_username, j_password)
+            create_linux = SRCreateServerLinuxRecord.objects.create_SRCreateServerLinuxRecord(create_linux_sr_info)
+            create_linux.save()
+    html = template.render(locals())
+    return HttpResponse(html)
+
+def icd_history(request,table):
+    template = get_template('icd_history.html')
+    now = datetime.now()
+    if table=='QuerySRRecord':
+        queryset = QuerySRRecord.objects.all()
+    elif table=='QueryCMDBRecord':
+        queryset=QueryCMDBRecord.objects.all()
+    elif table == 'SRCreateServerLinuxRecord':
+        queryset=SRCreateServerLinuxRecord.objects.all()
     html = template.render(locals())
     return HttpResponse(html)

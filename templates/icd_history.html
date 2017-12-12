@@ -1,0 +1,47 @@
+<!-- post.html -->
+{% extends 'base.html' %}
+{% load markdown_deux_tags %}
+{% block title %}
+Query info from {{ table }}
+{% endblock %}
+{% block headmessage %}
+    <h3 style="font-family: 'Arial Black'">Query info from {{ table }}</h3>
+{% endblock %}
+{% block content %}
+
+    {% if table == 'QueryCMDBRecord' %}
+    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+        <caption><h3>CMDB info from ICD</h3></caption>
+        <thead>
+        <tr>
+            <th>QueryDate</th>
+            <th>Hostname</th>
+            <th>COMPUTERSYSTEM_NAME</th>
+            <th>COMPUTERSYSTEM_NUMCPUS</th>
+            <th>COMPUTERSYSTEM_MEMORYSIZE</th>
+            <th>COMPUTERSYSTEM_TSHIRTSIZE</th>
+            <th>COMPUTERSYSTEM_OPERATIONALSTATUS</th>
+            <th>COMPUTERSYSTEM_MODEL</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sr_cmdb_info in queryset %}
+            <tr>
+                <td>{{ sr_cmdb_info.date }}</td>
+                <td>{{ sr_cmdb_info.hostname }}</td>
+                <td>{{ sr_cmdb_info.name }}</td>
+                <td>{{ sr_cmdb_info.numcpus }}</td>
+                <td>{{ sr_cmdb_info.memorysize }}</td>
+                <td>{{ sr_cmdb_info.tshirtsize }}</td>
+                <td>{{ sr_cmdb_info.operationalstatus }}</td>
+                <td>{{ sr_cmdb_info.model }}</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{#        <table class="table table-bordered table-sm" style="font-size: 8pt">#}
+{#        <caption>SR info from ICD</caption>#}
+{#		<thead class="thead-light"><tr><th>Service Request Id</th><th>Summary</th><th>Classification Description</th><th>Status</th><th>Configuration Item Name</th><th>ITDIPADDRESS_EP (ip)</th><th>ITDHOSTNAME (hostname)</th><th>ITDDISK0SIZE (disksize)</th><th>ITDMEMORY (memsize)</th><th>EVRVIRTUALSIZE (virtualsize)</th><th>EVRVCPUSIZE (cpusize)</th><th>ITDHYPERVISOR</th><th>ITDCUSTOMER (customer)</th></tr></thead>#}
+{#        <tbody><tr class="table-success"><td>{{ sr_icd_info.sr }}</td><td>{{ sr_icd_info.summary }}</td><td>{{ sr_icd_info.classification_description }}</td><td>{{ sr_icd_info.status }}</td><td>{{ sr_icd_info.configuration_item_name }}</td><td>{{ sr_icd_info.ip }}</td><td>{{ sr_icd_info.hostname }}</td><td>{{ sr_icd_info.disksize }}</td><td>{{ sr_icd_info.memsize }}</td><td>{{ sr_icd_info.virtualsize }}</td><td>{{ sr_icd_info.cpusize }}</td><td>{{ sr_icd_info.hypervisor }}</td><td>{{ sr_icd_info.customer }}</td></tr></tbody>#}
+{#        </table>#}
+{% endblock %}

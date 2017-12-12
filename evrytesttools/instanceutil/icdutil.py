@@ -165,7 +165,7 @@ def get_sr_icd_info_attrs(srid, j_username, j_password):
             'virtualsize': virtualsize, 'cpusize': cpusize, 'hypervisor': hypervisor}
 
 
-def sr_create_server(tshirtsize_option, hypervisor_option, security_zone, purposeofsr, j_username, j_password):
+def sr_create_server_linux(tshirtsize_option, hypervisor_option, security_zone, purposeofsr, j_username, j_password):
     s = requests.Session()
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0',
@@ -324,7 +324,7 @@ def sr_create_server(tshirtsize_option, hypervisor_option, security_zone, purpos
                'uisessionid': uisessionid, 'events': str(events)}
     r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
 
-    return {'item': item, 'customer': customer, 'customername': customername, 'disasterlevelclass ': disasterlevelclass,
+    return {'item': item, 'customer': customer, 'customername': customername, 'disasterlevelclass': disasterlevelclass,
             'hostname': hostname, 'operationsystem': operationsystem, 'environment': environment, 'backup'
             : backup, 'servicelevel': servicelevel, 'servicemodel': servicemodel,
             'retentionofbackup': retentionofbackup, 'storegetier': storegetier, 'serverbemanaged': serverbemanaged,
@@ -419,6 +419,14 @@ def get_cmdb_icd_info_spec(hostname, j_username, j_password):
         numcpus = soup.find('td', text='COMPUTERSYSTEM_NUMCPUS').parent.contents[3].text
     except Exception as e:
         numcpus = ''
+    try:
+        operationalstatus = soup.find('td', text='COMPUTERSYSTEM_OPERATIONALSTATUS').parent.contents[3].text
+    except Exception as e:
+        operationalstatus = ''
+    try:
+        model = soup.find('td', text='COMPUTERSYSTEM_MODEL').parent.contents[3].text
+    except Exception as e:
+        model = ''
 
     # logout
     events = [{"type": "click", "targetId": "titlebar_hyperlink_7-lbsignout", "value": "", "requestType": "SYNC",
@@ -430,7 +438,7 @@ def get_cmdb_icd_info_spec(hostname, j_username, j_password):
     r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
 
     return {'hostname': hostname, 'name': name, 'memorysize': memorysize, 'tshirtsize': tshirtsize,
-            'numcpus': numcpus}
+            'numcpus': numcpus, 'operationalstatus': operationalstatus, 'model': model}
 
 
 if __name__ == '__main__':
