@@ -92,6 +92,7 @@ class QueryCMDBRecord(models.Model):
 class SRCreateServerLinuxRecordsManager(models.Manager):
     def create_SRCreateServerLinuxRecord(self, create_linux_sr_info):
         srcreateserverlinuxrecord = self.create(item=create_linux_sr_info['item'],
+                                                operationusername=create_linux_sr_info['operationusername'],
                                                 customer=create_linux_sr_info['customer'],
                                                 customername=create_linux_sr_info['customername'],
                                                 disasterlevelclass=create_linux_sr_info['disasterlevelclass'],
@@ -113,6 +114,7 @@ class SRCreateServerLinuxRecordsManager(models.Manager):
         return srcreateserverlinuxrecord
 class SRCreateServerLinuxRecord(models.Model):
     date = models.DateTimeField(auto_now=True, auto_created=True)
+    operationusername = models.CharField(max_length=100,null=True)
     item = models.CharField(max_length=100)
     customer = models.CharField(max_length=100)
     customername = models.CharField(max_length=100)

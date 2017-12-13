@@ -18,6 +18,6 @@ class QueryCMDBRecordAdmin(admin.ModelAdmin):
 admin.site.register(QueryCMDBRecord,QueryCMDBRecordAdmin)
 
 class SRCreateServerLinuxRecordAdmin(admin.ModelAdmin):
-    list_display = ('date','hostname','tshirtsize','vcpusize','memsize','hypervisor','securityzone','srsubmitedinfo')
+    list_display = ('date','hostname','tshirtsize','vcpusize','memsize','hypervisor','securityzone','srsubmitedinfo','operationusername')
 
 admin.site.register(SRCreateServerLinuxRecord,SRCreateServerLinuxRecordAdmin)

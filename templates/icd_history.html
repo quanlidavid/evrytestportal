@@ -89,6 +89,7 @@ Query info from {{ table }}
         <thead>
         <tr>
             <th>QueryDate</th>
+            <th>Operation Username</th>
             <th>Result of Service Request Submit</th>
             <th>Hypervisor</th>
             <th>Operating System Version</th>
@@ -108,6 +109,7 @@ Query info from {{ table }}
         {% for create_linux_sr_info in queryset %}
             <tr>
                 <td>{{ create_linux_sr_info.date }}</td>
+                <td>{{ create_linux_sr_info.operationusername }}</td>
                 <td>{{ create_linux_sr_info.srsubmitedinfo }}</td>
                 <td>{{ create_linux_sr_info.hypervisor }}</td>
                 <td>{{ create_linux_sr_info.operationsystem }}</td>

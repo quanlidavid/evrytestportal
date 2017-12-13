@@ -349,7 +349,7 @@ def sr_create_server_linux(tshirtsize_option, hypervisor_option, security_zone, 
                'uisessionid': uisessionid, 'events': str(events)}
     r = s.post('https://10.180.19.18/maximo/ui/maximo.jsp', data=payload)
 
-    return {'item': item, 'customer': customer, 'customername': customername, 'disasterlevelclass': disasterlevelclass,
+    return {'operationusername':j_username,'item': item, 'customer': customer, 'customername': customername, 'disasterlevelclass': disasterlevelclass,
             'hostname': hostname, 'operationsystem': operationsystem, 'environment': environment, 'backup'
             : backup, 'servicelevel': servicelevel, 'servicemodel': servicemodel,
             'retentionofbackup': retentionofbackup, 'storegetier': storegetier, 'serverbemanaged': serverbemanaged,
