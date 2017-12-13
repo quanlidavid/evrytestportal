@@ -50,18 +50,22 @@ Create SR - Linux Provision
             </div>
             <div class="form-group col-md-4">
                 <label for="j_username">Username:</label>
-                <input type="email" class="form-control" id="j_username" name="j_username" value="feilibj@cn.ibm.com">
+                <input type="email" class="form-control" id="j_username" name="j_username" value="quanlibj@cn.ibm.com">
             </div>
             <div class="form-group col-md-4">
                 <label for="j_password">Password:</label>
-                <input type="password" class="form-control" id="j_password" name="j_password" value="QAZqaz!@#123">
+                <input type="password" class="form-control" id="j_password" name="j_password" value="erguotou_258">
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit SR</button>
-        <label class="label label-info">This will take about 15 seconds. But if SoftLayer vpn disconnected, it will take about 60 seconds to reconnect.</label>
+        <label class="text-primary">This will take about 15 seconds. But if SoftLayer vpn disconnected, it will take about 60 seconds to reconnect.</label>
     {% csrf_token %}
     </form>
-
+    {% if errormessage != None %}
+        <br>
+        <div class="text-danger">{{ errormessage }}</div>
+        <br>
+    {% endif %}
         <table class="table-striped table table-bordered table-sm" >
         <caption>SR info when created in ICD</caption>
             <tr><th>Result of Service Request Submit</th><td>{{ create_linux_sr_info.srsubmitedinfo }}</td></tr>

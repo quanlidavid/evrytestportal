@@ -6,6 +6,21 @@ import re
 urllib3.disable_warnings()
 
 
+class loginfailedException(BaseException):
+    def __init__(self, mesg="Login failed. Maybe username/password was wrong."):
+        self.mesg = mesg
+
+    def __str__(self):
+        return self.mesg
+
+class sridnotfoundException(BaseException):
+    def __init__(self, srid):
+        self.mesg = srid + " not found. Maybe it is not created by this user, so you have not access to see it."
+
+    def __str__(self):
+        return self.mesg
+
+
 def get_sr_icd_info(srid, j_username, j_password):
     s = requests.Session()
     headers = {
@@ -70,6 +85,10 @@ def get_sr_icd_info_attrs(srid, j_username, j_password):
     r = s.post('https://10.180.19.18/maximo/j_security_check', data=payload, headers=headers)
 
     soup = BeautifulSoup(r.text, 'html5lib')
+    try:
+        soup.find('input', attrs={'name': 'csrftokenholder'})['value']
+    except Exception as e:
+        raise (loginfailedException())
     csrftoken = soup.find('input', attrs={'name': 'csrftokenholder'})['value']
     uisessionid = soup.find('input', attrs={'name': 'uisessionid'})['value']
 
@@ -83,6 +102,8 @@ def get_sr_icd_info_attrs(srid, j_username, j_password):
 
     soup = BeautifulSoup(r.text, 'html5lib')
     firsttd = soup.find('td', text=srid)
+    if firsttd == None:
+        raise(sridnotfoundException(srid))
     parent = firsttd.parent
 
     sr = parent.contents[1]
@@ -187,6 +208,10 @@ def sr_create_server_linux(tshirtsize_option, hypervisor_option, security_zone, 
 
     # open create linux dialog
     soup = BeautifulSoup(r.text, 'html5lib')
+    try:
+        soup.find('input', attrs={'name': 'csrftokenholder'})['value']
+    except Exception as e:
+        raise (loginfailedException())
     csrftoken = soup.find('input', attrs={'name': 'csrftokenholder'})['value']
     uisessionid = soup.find('input', attrs={'name': 'uisessionid'})['value']
 
@@ -351,6 +376,10 @@ def get_cmdb_icd_info_spec(hostname, j_username, j_password):
     r = s.post('https://10.180.19.18/maximo/j_security_check', data=payload, headers=headers)
 
     soup = BeautifulSoup(r.text, 'html5lib')
+    try:
+        soup.find('input', attrs={'name': 'csrftokenholder'})['value']
+    except Exception as e:
+        raise (loginfailedException())
     csrftoken = soup.find('input', attrs={'name': 'csrftokenholder'})['value']
     uisessionid = soup.find('input', attrs={'name': 'uisessionid'})['value']
 

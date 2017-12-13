@@ -2,8 +2,10 @@ from django.template.loader import get_template
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from datetime import datetime
-from evrytesttools.instanceutil.icdutil import get_sr_icd_info_attrs, sr_create_server_linux,get_cmdb_icd_info_spec
-from evrytesttools.models import QuerySRRecord,QueryCMDBRecord,SRCreateServerLinuxRecord
+from evrytesttools.instanceutil.icdutil import loginfailedException, sridnotfoundException, get_sr_icd_info_attrs, \
+    sr_create_server_linux, \
+    get_cmdb_icd_info_spec
+from evrytesttools.models import QuerySRRecord, QueryCMDBRecord, SRCreateServerLinuxRecord
 from evrytesttools.vpnutil import slvpn
 
 
@@ -25,11 +27,17 @@ def icd_sr_page(request):
     if srid != None and j_username != None and j_password != None:
         if srid != '' and j_username != '' and j_password != '':
             slvpn.connectslvpn()
-            sr_icd_info = get_sr_icd_info_attrs(srid, j_username, j_password)
-            qsr = QuerySRRecord.objects.create_QuerySRRecord(sr_icd_info)
-            qsr.save()
+            try:
+                sr_icd_info = get_sr_icd_info_attrs(srid, j_username, j_password)
+                qsr = QuerySRRecord.objects.create_QuerySRRecord(sr_icd_info)
+                qsr.save()
+            except loginfailedException as e:
+                errormessage = e.mesg
+            except sridnotfoundException as e:
+                errormessage = e.mesg
     html = template.render(locals())
     return HttpResponse(html)
+
 
 def icd_cmdb_page(request):
     template = get_template('icd_cmdb.html')
@@ -40,11 +48,15 @@ def icd_cmdb_page(request):
     if hostname != None and j_username != None and j_password != None:
         if hostname != '' and j_username != '' and j_password != '':
             slvpn.connectslvpn()
-            sr_cmdb_info = get_cmdb_icd_info_spec(hostname, j_username, j_password)
-            qcmdb = QueryCMDBRecord.objects.create_QueryCMDBRecord(sr_cmdb_info)
-            qcmdb.save()
+            try:
+                sr_cmdb_info = get_cmdb_icd_info_spec(hostname, j_username, j_password)
+                qcmdb = QueryCMDBRecord.objects.create_QueryCMDBRecord(sr_cmdb_info)
+                qcmdb.save()
+            except loginfailedException as e:
+                errormessage = e.mesg
     html = template.render(locals())
     return HttpResponse(html)
+
 
 def icd_create_linux_sr_page(request):
     template = get_template('icd_create_linux_sr.html')
@@ -58,21 +70,26 @@ def icd_create_linux_sr_page(request):
     if j_username != None and j_password != None:
         if j_username != '' and j_password != '':
             slvpn.connectslvpn()
-            create_linux_sr_info = sr_create_server_linux(tshirtsize_option, hypervisor_option, security_zone, purposeofsr,
-                                                    j_username, j_password)
-            create_linux = SRCreateServerLinuxRecord.objects.create_SRCreateServerLinuxRecord(create_linux_sr_info)
-            create_linux.save()
+            try:
+                create_linux_sr_info = sr_create_server_linux(tshirtsize_option, hypervisor_option, security_zone,
+                                                              purposeofsr,
+                                                              j_username, j_password)
+                create_linux = SRCreateServerLinuxRecord.objects.create_SRCreateServerLinuxRecord(create_linux_sr_info)
+                create_linux.save()
+            except loginfailedException as e:
+                errormessage = e.mesg
     html = template.render(locals())
     return HttpResponse(html)
 
-def icd_history(request,table):
+
+def icd_history(request, table):
     template = get_template('icd_history.html')
     now = datetime.now()
-    if table=='QuerySRRecord':
+    if table == 'QuerySRRecord':
         queryset = QuerySRRecord.objects.all()
-    elif table=='QueryCMDBRecord':
-        queryset=QueryCMDBRecord.objects.all()
+    elif table == 'QueryCMDBRecord':
+        queryset = QueryCMDBRecord.objects.all()
     elif table == 'SRCreateServerLinuxRecord':
-        queryset=SRCreateServerLinuxRecord.objects.all()
+        queryset = SRCreateServerLinuxRecord.objects.all()
     html = template.render(locals())
     return HttpResponse(html)
