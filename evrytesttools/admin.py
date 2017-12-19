@@ -1,11 +1,11 @@
 from django.contrib import admin
-from .models import VIOinfo,QuerySRRecord,QueryCMDBRecord,SRCreateServerLinuxRecord
+from .models import VIORecord,QuerySRRecord,QueryCMDBRecord,SRCreateServerLinuxRecord
 # Register your models here.
 
-class VIOinfoAdmin(admin.ModelAdmin):
-    list_display = ('instancename','imagename','ip','size')
+class VIORecordAdmin(admin.ModelAdmin):
+    list_display = ('date','instancename','imagename','ip','size','status','availabilityzone','powerstate')
 
-admin.site.register(VIOinfo,VIOinfoAdmin)
+admin.site.register(VIORecord,VIORecordAdmin)
 
 class QuerySRRecordAdmin(admin.ModelAdmin):
     list_display = ('date','sr','summary','hostname','ip','status')

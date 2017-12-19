@@ -2,8 +2,20 @@ from django.db import models
 
 
 # Create your models here.
+# for vio record
 
-class VIOinfo(models.Model):
+class VIORecordsManager(models.Manager):
+    def create_VIORecord(self, instanceinfo):
+        viorecord = self.create(instancename=instanceinfo['instancename'],
+                                imagename=instanceinfo['imagename'],
+                                ip=instanceinfo['ip'],
+                                size=instanceinfo['size'],
+                                status=instanceinfo['status'],
+                                availabilityzone=instanceinfo['availabilityzone'],
+                                powerstate=instanceinfo['powerstate'])
+        return viorecord
+class VIORecord(models.Model):
+    date = models.DateTimeField(auto_now=True, auto_created=True)
     instancename = models.CharField(max_length=100)
     imagename = models.CharField(max_length=100)
     ip = models.CharField(max_length=100)
@@ -12,11 +24,14 @@ class VIOinfo(models.Model):
     availabilityzone = models.CharField(max_length=100)
     powerstate = models.CharField(max_length=100)
 
+    objects = VIORecordsManager()
+
     class Meta:
-        ordering = ('-instancename',)
+        ordering = ('-instancename', '-date')
 
     def __str__(self):
         return self.instancename
+
 
 # for query sr
 class QuerySRRecordsManager(models.Manager):
@@ -35,6 +50,8 @@ class QuerySRRecordsManager(models.Manager):
                                     cpusize=sr_icd_info['cpusize'],
                                     hypervisor=sr_icd_info['hypervisor'])
         return querysrrecord
+
+
 class QuerySRRecord(models.Model):
     date = models.DateTimeField(auto_now=True, auto_created=True)
     sr = models.CharField(max_length=100)
@@ -59,17 +76,20 @@ class QuerySRRecord(models.Model):
     def __str__(self):
         return self.sr
 
+
 # for query cmdb
 class QueryCMDBRecordsManager(models.Manager):
     def create_QueryCMDBRecord(self, cmdb_icd_info):
         querycmdbrecord = self.create(hostname=cmdb_icd_info['hostname'],
-                                    name=cmdb_icd_info['name'],
-                                    memorysize=cmdb_icd_info['memorysize'],
-                                    tshirtsize=cmdb_icd_info['tshirtsize'],
-                                    numcpus=cmdb_icd_info['numcpus'],
-                                    operationalstatus=cmdb_icd_info['operationalstatus'],
-                                    model=cmdb_icd_info['model'])
+                                      name=cmdb_icd_info['name'],
+                                      memorysize=cmdb_icd_info['memorysize'],
+                                      tshirtsize=cmdb_icd_info['tshirtsize'],
+                                      numcpus=cmdb_icd_info['numcpus'],
+                                      operationalstatus=cmdb_icd_info['operationalstatus'],
+                                      model=cmdb_icd_info['model'])
         return querycmdbrecord
+
+
 class QueryCMDBRecord(models.Model):
     date = models.DateTimeField(auto_now=True, auto_created=True)
     hostname = models.CharField(max_length=100)
@@ -87,6 +107,7 @@ class QueryCMDBRecord(models.Model):
 
     def __str__(self):
         return self.hostname
+
 
 # for sr create linux
 class SRCreateServerLinuxRecordsManager(models.Manager):
@@ -112,9 +133,11 @@ class SRCreateServerLinuxRecordsManager(models.Manager):
                                                 memsize=create_linux_sr_info['memsize'],
                                                 srsubmitedinfo=create_linux_sr_info['srsubmitedinfo'])
         return srcreateserverlinuxrecord
+
+
 class SRCreateServerLinuxRecord(models.Model):
     date = models.DateTimeField(auto_now=True, auto_created=True)
-    operationusername = models.CharField(max_length=100,null=True)
+    operationusername = models.CharField(max_length=100, null=True)
     item = models.CharField(max_length=100)
     customer = models.CharField(max_length=100)
     customername = models.CharField(max_length=100)
@@ -141,4 +164,4 @@ class SRCreateServerLinuxRecord(models.Model):
         ordering = ('-date',)
 
     def __str__(self):
-        return self.hostname+' - '+self.srsubmitedinfo
+        return self.hostname + ' - ' + self.srsubmitedinfo

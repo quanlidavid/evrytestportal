@@ -128,4 +128,34 @@ Query info from {{ table }}
     </table>
     {% endif %}
 
+    {% if table == 'VIORecord' %}
+    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+        <caption><h3>VIO info history</h3></caption>
+        <thead>
+        <tr>
+            <th>QueryDate</th>
+            <th>Instance Name<</th>
+            <th>Image Name</th>
+            <th>IP Address</th>
+            <th>Size</th>
+            <th>Status</th>
+            <th>Availability Zone</th>
+            <th>Power State</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for instanceinfo in queryset %}
+            <tr>
+                <td>{{ instanceinfo.date }}</td>
+                <td>{{ instanceinfo.instancename }}</td>
+                <td>{{ instanceinfo.imagename }}</td>
+                <td>{{ instanceinfo.ip }}</td>
+                <td>{{ instanceinfo.size }}</td>
+                <td>{{ instanceinfo.status }}</td>
+                <td>{{ instanceinfo.availabilityzone }}</td>
+                <td>{{ instanceinfo.powerstate }}</td>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 {% endblock %}

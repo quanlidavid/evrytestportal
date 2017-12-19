@@ -5,7 +5,7 @@ from datetime import datetime
 from evrytesttools.instanceutil.icdutil import loginfailedException, sridnotfoundException, get_sr_icd_info_attrs, \
     sr_create_server_linux, \
     get_cmdb_icd_info_spec
-from evrytesttools.models import QuerySRRecord, QueryCMDBRecord, SRCreateServerLinuxRecord
+from evrytesttools import models
 from evrytesttools.vpnutil import slvpn
 from evrytesttools.instanceutil import vioutil
 
@@ -30,7 +30,7 @@ def icd_sr_page(request):
             slvpn.connectslvpn()
             try:
                 sr_icd_info = get_sr_icd_info_attrs(srid, j_username, j_password)
-                qsr = QuerySRRecord.objects.create_QuerySRRecord(sr_icd_info)
+                qsr = models.QuerySRRecord.objects.create_QuerySRRecord(sr_icd_info)
                 qsr.save()
             except loginfailedException as e:
                 errormessage = e.mesg
@@ -51,7 +51,7 @@ def icd_cmdb_page(request):
             slvpn.connectslvpn()
             try:
                 sr_cmdb_info = get_cmdb_icd_info_spec(hostname, j_username, j_password)
-                qcmdb = QueryCMDBRecord.objects.create_QueryCMDBRecord(sr_cmdb_info)
+                qcmdb = models.QueryCMDBRecord.objects.create_QueryCMDBRecord(sr_cmdb_info)
                 qcmdb.save()
             except loginfailedException as e:
                 errormessage = e.mesg
@@ -75,7 +75,8 @@ def icd_create_linux_sr_page(request):
                 create_linux_sr_info = sr_create_server_linux(tshirtsize_option, hypervisor_option, security_zone,
                                                               purposeofsr,
                                                               j_username, j_password)
-                create_linux = SRCreateServerLinuxRecord.objects.create_SRCreateServerLinuxRecord(create_linux_sr_info)
+                create_linux = models.SRCreateServerLinuxRecord.objects.create_SRCreateServerLinuxRecord(
+                    create_linux_sr_info)
                 create_linux.save()
             except loginfailedException as e:
                 errormessage = e.mesg
@@ -87,11 +88,13 @@ def icd_history(request, table):
     template = get_template('icd_history.html')
     now = datetime.now()
     if table == 'QuerySRRecord':
-        queryset = QuerySRRecord.objects.all()
+        queryset = models.QuerySRRecord.objects.all()
     elif table == 'QueryCMDBRecord':
-        queryset = QueryCMDBRecord.objects.all()
+        queryset = models.QueryCMDBRecord.objects.all()
     elif table == 'SRCreateServerLinuxRecord':
-        queryset = SRCreateServerLinuxRecord.objects.all()
+        queryset = models.SRCreateServerLinuxRecord.objects.all()
+    elif table == 'VIORecord':
+        queryset = models.VIORecord.objects.all()
     html = template.render(locals())
     return HttpResponse(html)
 
@@ -122,6 +125,8 @@ def vioinfo(request):
     if username != None and password != None and instances__filter__q != None and domain != None:
         try:
             instanceinfo = vioutil.getInstanceInfoOfVIO(domain, instances__filter__q, username, password)
+            viorecord = models.VIORecord.objects.create_VIORecord(instanceinfo)
+            viorecord.save()
         except vioutil.viologinfailedException as e:
             errormessage = e.mesg
     html = template.render(locals())
