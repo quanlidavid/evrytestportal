@@ -7,6 +7,7 @@ from evrytesttools.instanceutil.icdutil import loginfailedException, sridnotfoun
     get_cmdb_icd_info_spec
 from evrytesttools.models import QuerySRRecord, QueryCMDBRecord, SRCreateServerLinuxRecord
 from evrytesttools.vpnutil import slvpn
+from evrytesttools.instanceutil import vioutil
 
 
 # Create your views here.
@@ -91,5 +92,37 @@ def icd_history(request, table):
         queryset = QueryCMDBRecord.objects.all()
     elif table == 'SRCreateServerLinuxRecord':
         queryset = SRCreateServerLinuxRecord.objects.all()
+    html = template.render(locals())
+    return HttpResponse(html)
+
+
+# def run(request):
+#     hypervisor = request.POST.get('hypervisor')
+#     customer = request.POST.get('customer')
+#     instancehostname = request.POST.get('instancehostname')
+#     instanceip = request.POST.get('instanceip')
+#     linuxinstance = linux()
+#     result = linuxinstance.getInstanceInfo(hypervisor, customer, instancehostname, instanceip)
+#     return render(request, 'run.html', {'info': linuxinstance.getlogfilepath(), 'result': result})
+#
+#
+# def logdetails_page(request):
+#     logfilepath = request.GET.get('info')
+#     file = open(logfilepath)
+#     return render(request, 'logdetails.html', {'info': file.read()})
+
+
+def vioinfo(request):
+    template = get_template('vioinfo.html')
+    now = datetime.now()
+    domain = request.POST.get('domain')
+    instances__filter__q = request.POST.get('instances__filter__q')
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    if username != None and password != None and instances__filter__q != None and domain != None:
+        try:
+            instanceinfo = vioutil.getInstanceInfoOfVIO(domain, instances__filter__q, username, password)
+        except vioutil.viologinfailedException as e:
+            errormessage = e.mesg
     html = template.render(locals())
     return HttpResponse(html)

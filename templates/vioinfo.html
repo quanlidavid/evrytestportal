@@ -1,0 +1,52 @@
+<!-- post.html -->
+{% extends 'base.html' %}
+{% load markdown_deux_tags %}
+{% block title %}
+Query SR info from ICD
+{% endblock %}
+{% block headmessage %}
+    <h3 style="font-family: 'Arial Black'">{{ post.title }}</h3>
+{% endblock %}
+{% block content %}
+    <form method="post" action=".">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="domain">Domain:</label>
+                <input class="form-control" name="domain" id="domain" type="text" value="EVR-NO-CCD1">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="instances__filter__q">Domain:</label>
+                <input class="form-control" name="instances__filter__q" id="instances__filter__q" type="text" value="test-vm-12847">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" value="e214375">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" value="Passw0rd2018">
+            </div>
+        </div>
+        <button id="btn" type="submit" class="btn btn-primary">Query Instance</button>
+        <label class="text-primary">This will not work when Evry vpn disconnected.</label>
+        {% csrf_token %}
+    </form>
+
+
+    {% if errormessage != None %}
+            <br>
+            <div class="text-danger">{{ errormessage }}</div>
+            <br>
+    {% endif %}
+
+    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+        <caption><h3>VIO info from VIO</h3></caption>
+        <tr><th>Instance Name</th><td>{{ instanceinfo.instancename }}</td></tr>
+        <tr><th>Image Name</th><td>{{ instanceinfo.imagename }}</td></tr>
+        <tr><th>IP Address</th><td>{{ instanceinfo.ip }}</td></tr>
+        <tr><th>Size</th><td>{{ instanceinfo.size }}</td></tr>
+        <tr><th>Status</th><td>{{ instanceinfo.status }}</td></tr>
+        <tr><th>Availability Zone</th><td>{{ instanceinfo.availabilityzone }}</td></tr>
+        <tr><th>Power State</th><td>{{ instanceinfo.powerstate }}</td></tr>
+    </table>
+{% endblock %}

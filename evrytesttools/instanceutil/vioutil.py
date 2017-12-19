@@ -4,6 +4,21 @@ import urllib3
 
 urllib3.disable_warnings()
 
+class viologinfailedException(BaseException):
+    def __init__(self, mesg="VIO Login failed. Maybe username/password was wrong."):
+        self.mesg = mesg
+
+    def __str__(self):
+        return self.mesg
+
+class sridnotfoundException(BaseException):
+    def __init__(self, srid):
+        self.mesg = srid + " not found. Maybe it is not created by this user, so you have not access to see it."
+
+    def __str__(self):
+        return self.mesg
+
+
 def getInstanceInfoOfVIO(domain, instances__filter__q, username='e214375', password='Passw0rd2018'):
     fake_email = username
     fake_password = password
@@ -38,6 +53,12 @@ def getInstanceInfoOfVIO(domain, instances__filter__q, username='e214375', passw
 
     soup = BeautifulSoup(r.text, 'html5lib')
     tbody = soup.find('tbody')
+
+    try:
+        tr = tbody.contents[1]
+    except Exception as e:
+        raise (viologinfailedException())
+
     tr = tbody.contents[1]
 
     # logout
