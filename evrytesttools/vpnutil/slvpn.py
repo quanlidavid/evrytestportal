@@ -3,8 +3,10 @@ from selenium.webdriver.common.keys import Keys
 import time,os,subprocess
 
 def connectslvpn():
-    res = subprocess.call('ping 10.180.19.18')
-    if res==1:
+    res = os.popen('ping 10.180.19.18')
+    str = res.read()
+
+    if 'TTL=' not in str:
         driver = webdriver.Ie()
         driver.get("https://vpn.osl01.softlayer.com/prx/000/http/localhost/welcome/welcome.html")
         time.sleep(5)
