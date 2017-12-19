@@ -40,6 +40,9 @@ def getInstanceInfoOfVIO(domain, instances__filter__q, username='e214375', passw
     tbody = soup.find('tbody')
     tr = tbody.contents[1]
 
+    # logout
+    r = s.get('https://vioppr.cloud.cosng.net/auth/logout/')
+
     instancename = ''.join(tr.contents[2].stripped_strings)
     imagename = ''.join(tr.contents[3].stripped_strings)
     ip = ''.join(tr.contents[4].stripped_strings)
@@ -53,5 +56,5 @@ def getInstanceInfoOfVIO(domain, instances__filter__q, username='e214375', passw
 
 
 if __name__ == '__main__':
-    print(getInstanceInfoOfVIO('EVR-NO-CCD1', 'evr-ccd1-l01262'))
-    print(getInstanceInfoOfVIO('EVR-NO-CCD1', 'evr-ccd1-l01257'))
+    # print(getInstanceInfoOfVIO('EVR-NO-CCD1', 'evr-ccd1-l01262'))
+    print(getInstanceInfoOfVIO('EVR-NO-CCD1', 'test-vm-12847'))

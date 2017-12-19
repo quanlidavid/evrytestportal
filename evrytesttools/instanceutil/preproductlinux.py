@@ -207,8 +207,8 @@ class linux():
         return {'Hostname': Hostname, 'IP': IP, 'CPUnumber': CPUnumber, 'MEM': MEM, 'Disk': Disk,
                 'NTPTimeZone': NTPTimeZone, 'DNSstatus': DNSstatus, 'ITMINFO': ITMINFO, 'BigfixINFO': BigfixINFO}
 
-    if __name__ == '__main__':
-        # linux = linux('e214375','Passw0rd2018')
+if __name__ == '__main__':
+    linux = linux('e214375','Passw0rd2018')
         # if linux.connectToRundeckServer():
         #     print('rundeck server connected.')
         # else:
@@ -238,7 +238,5 @@ class linux():
         # linux.closeChannel()
         # linux.closeConnection()
         # linux = linux()
-        # # linux.getInstanceInfo('VMWare','EVR-NO-CCD1','evr-ccd1-l01257','10.114.27.106')
-        # linux.getInstanceInfo('VMWare','EVR-NO-CCD1','evr-ccd1-l01202','10.114.27.53')
-        # # linux.getInstanceInfo('VMWare','EVR-NO-CCD1','evr-ccd1-l01178','10.114.28.45')
-        pass
+    linux.getInstanceInfo('VMWare','EVR-NO-CCD1','test-vm-12847','10.114.27.13')
+
