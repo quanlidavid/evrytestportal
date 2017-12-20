@@ -7,7 +7,7 @@ from evrytesttools.instanceutil.icdutil import loginfailedException, sridnotfoun
     get_cmdb_icd_info_spec
 from evrytesttools import models
 from evrytesttools.vpnutil import slvpn
-from evrytesttools.instanceutil import vioutil
+from evrytesttools.instanceutil import vioutil, preproductlinux
 
 
 # Create your views here.
@@ -95,24 +95,37 @@ def icd_history(request, table):
         queryset = models.SRCreateServerLinuxRecord.objects.all()
     elif table == 'VIORecord':
         queryset = models.VIORecord.objects.all()
+    elif table == 'LinuxInfoRecord':
+        queryset = models.LinuxInfoRecord.objects.all()
     html = template.render(locals())
     return HttpResponse(html)
 
 
-# def run(request):
-#     hypervisor = request.POST.get('hypervisor')
-#     customer = request.POST.get('customer')
-#     instancehostname = request.POST.get('instancehostname')
-#     instanceip = request.POST.get('instanceip')
-#     linuxinstance = linux()
-#     result = linuxinstance.getInstanceInfo(hypervisor, customer, instancehostname, instanceip)
-#     return render(request, 'run.html', {'info': linuxinstance.getlogfilepath(), 'result': result})
-#
-#
-# def logdetails_page(request):
-#     logfilepath = request.GET.get('info')
-#     file = open(logfilepath)
-#     return render(request, 'logdetails.html', {'info': file.read()})
+def linuxinstanceinfo(request):
+    template = get_template('linuxinstanceinfo.html')
+    now = datetime.now()
+    hypervisor = request.POST.get('hypervisor')
+    customer = request.POST.get('customer')
+    instancehostname = request.POST.get('instancehostname')
+    instanceip = request.POST.get('instanceip')
+    if hypervisor != None and customer != None and instancehostname != None and instanceip != None:
+        linuxinstance = preproductlinux.linux('e214375', 'Passw0rd2018')
+        linuxinstanceinfo = linuxinstance.getInstanceInfo(hypervisor, customer, instancehostname, instanceip)
+        linuxinforecord = models.LinuxInfoRecord.objects.create_LinuxInfoRecord(linuxinstanceinfo)
+        linuxinforecord.save()
+    html = template.render(locals())
+    return HttpResponse(html)
+
+
+def linuxdetailslog(request):
+    template = get_template('linuxdetaillog.html')
+    now = datetime.now()
+    logpath = request.GET.get('logpath')
+    if logpath != None:
+        with open(logpath, 'r') as file:
+            log = file.read()
+    html = template.render(locals())
+    return HttpResponse(html)
 
 
 def vioinfo(request):

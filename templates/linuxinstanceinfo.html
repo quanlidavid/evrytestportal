@@ -1,0 +1,67 @@
+<!-- post.html -->
+{% extends 'base.html' %}
+{% load markdown_deux_tags %}
+{% block title %}
+Query SR info from ICD
+{% endblock %}
+{% block headmessage %}
+    <h3 style="font-family: 'Arial Black'">{{ post.title }}</h3>
+{% endblock %}
+{% block content %}
+    <form method="post" action=".">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="instancehostname">Instance Hostname:</label>
+                <input type="text" class="form-control" id="instancehostname" name="instancehostname" value="test-vm-12847">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="instanceip">Instance IP:</label>
+                <input type="text" class="form-control" id="instanceip" name="instanceip" value="10.114.27.13">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="customer">Customer:</label>
+                <input class="form-control" name="customer" id="customer" type="text" value="EVR-NO-CCD1">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+            <label for="hypervisor">Hypervisior: </label>
+            <select class="custom-select" id="hypervisor" name="hypervisor">
+                <option value="VMWare" selected="selected">VMWare</option>
+                <option value="HyperV">HyperV</option>
+            </select>
+            </div>
+        </div>
+        <button id="btn" type="submit" class="btn btn-primary">Get Instance Info</button>
+        <label class="text-primary">  This will not work when Evry vpn disconnected.</label>
+        {% csrf_token %}
+    </form>
+
+
+    {% if errormessage != None %}
+            <br>
+            <div class="text-danger">{{ errormessage }}</div>
+            <br>
+    {% endif %}
+    <br>
+    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+        <caption><h3>Linux Instance Info</h3></caption>
+        <tr><th>Hostname</th><td>{{ linuxinstanceinfo.Hostname }}</td></tr>
+        <tr><th>IP</th><td>{{ linuxinstanceinfo.IP }}</td></tr>
+        <tr><th>CPUnumber</th><td>{{ linuxinstanceinfo.CPUnumber }}</td></tr>
+        <tr><th>MEM</th><td>{{ linuxinstanceinfo.MEM }}</td></tr>
+        <tr><th>Disk</th><td>{{ linuxinstanceinfo.Disk }}</td></tr>
+        <tr><th>NTPTimeZone</th><td>{{ linuxinstanceinfo.NTPTimeZone }}</td></tr>
+        <tr><th>DNSstatus</th><td>{{ linuxinstanceinfo.DNSstatus }}</td></tr>
+        <tr><th>ITMINFO</th><td>{{ linuxinstanceinfo.ITMINFO }}</td></tr>
+        <tr><th>BigfixINFO</th><td>{{ linuxinstanceinfo.BigfixINFO }}</td></tr>
+        <tr><th>InstancePassword</th><td>{{ linuxinstanceinfo.InstancePassword }}</td></tr>
+        <tr><th>See detail logs</th>
+            <td>
+            {% if linuxinstanceinfo.logfilepath != None %}
+                <a href="/evrytestportal/linuxdetaillog?logpath={{ linuxinstanceinfo.logfilepath }}">details</a>
+            {% endif %}
+            </td>
+        </tr>
+    </table>
+{% endblock %}

@@ -13,6 +13,8 @@ urlpatterns = [
     path('icd_cmdb/', views.icd_cmdb_page),
     path('icd_create_linux_sr/', views.icd_create_linux_sr_page),
     path('icdhistory/<str:table>/',views.icd_history),
-    path('vioinfo/',views.vioinfo)
+    path('vioinfo/',views.vioinfo),
+    path('linuxinstanceinfo/',views.linuxinstanceinfo),
+    path('linuxdetaillog/',views.linuxdetailslog),
     # path('post/<slug:slug>', showpost),
 ]

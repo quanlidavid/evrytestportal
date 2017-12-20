@@ -143,7 +143,7 @@ class linux():
         result = self.runCommandInChannel('ping www.google.com -c 5\n')
         linenumber = len(re.findall(r'\d+ bytes from .* ms', result))
         if linenumber == 5:
-            return 'pass'
+            return 'Running'
         else:
             return 'fail'
 
@@ -160,7 +160,7 @@ class linux():
         result3 = self.runCommandInChannel('/opt/IBM/ITM/bin/cinfo -o\n')
         runningInstanceNumber = len(re.findall(r'Instance', result3))
         if runningProcessNumber == 3 and runningProdNumber == 2 and runningInstanceNumber == 2:
-            return 'pass'
+            return 'Running'
         else:
             return 'fail'
 
@@ -171,7 +171,7 @@ class linux():
         runningProdNumber = len(re.findall(r'running', result2))
         result3 = self.runCommandInChannel('cat /var/opt/BESClient/besclient.config\n')
         if runningProcessNumber == 1 and runningProcessNumber == 1:
-            return 'pass'
+            return 'Running'
         else:
             return 'fail'
 
@@ -204,39 +204,43 @@ class linux():
 
         self.closeChannel()
         self.closeConnection()
-        return {'Hostname': Hostname, 'IP': IP, 'CPUnumber': CPUnumber, 'MEM': MEM, 'Disk': Disk,
-                'NTPTimeZone': NTPTimeZone, 'DNSstatus': DNSstatus, 'ITMINFO': ITMINFO, 'BigfixINFO': BigfixINFO}
+        logfilepath = self.getlogfilepath()
+        return {'hypervisor': hypervisor, 'customer': customer, 'instancehostname': instancehostname,
+                'instanceip': instanceip, 'Hostname': Hostname, 'IP': IP, 'CPUnumber': CPUnumber, 'MEM': MEM,
+                'Disk': Disk,
+                'NTPTimeZone': NTPTimeZone, 'DNSstatus': DNSstatus, 'ITMINFO': ITMINFO, 'BigfixINFO': BigfixINFO,
+                'InstancePassword': instancepassword, 'logfilepath': logfilepath}
+
 
 if __name__ == '__main__':
-    linux = linux('e214375','Passw0rd2018')
-        # if linux.connectToRundeckServer():
-        #     print('rundeck server connected.')
-        # else:
-        #     print('rundeck server connect failed.')
-        # password = linux.getPasswordOfInstanceByName('VMWare','EVR-NO-CCD1','evr-ccd1-l01257')
-        # linux.createChannel()
-        # linux.SSHToInstance('10.114.27.106',password)
-        # Hostname = linux.getHOSTNAMEofTestServer()
-        # print("Hostname = " + Hostname)
-        # IP = linux.getIPconfigofTestServer()
-        # print('IP = ' + str(IP))
-        # CPUnumber = linux.getCPUofTestServer()
-        # print('CPU number = ' + str(CPUnumber))
-        # MEM = linux.getMEMofTestServer()
-        # print('Memory = ' + MEM)
-        # Disk = linux.getDISKofTestServer()
-        # print('Disk = ' + Disk)
-        # NTPTimeZone = linux.getNTPofTestServer()
-        # print('NTP Timezone = ' + NTPTimeZone)
-        # DNSstatus = linux.getDNSofTestServer()
-        # print("DNS status = " + DNSstatus)
-        # ITMINFO = linux.getITMINFOofTestServer()
-        # print("ITM = " + ITMINFO)
-        # BigfixINFO = linux.getBigfixINFOofTestServer()
-        # print("Bigfix = " + BigfixINFO)
-        #
-        # linux.closeChannel()
-        # linux.closeConnection()
-        # linux = linux()
-    linux.getInstanceInfo('VMWare','EVR-NO-CCD1','test-vm-12847','10.114.27.13')
-
+    linux = linux('e214375', 'Passw0rd2018')
+    # if linux.connectToRundeckServer():
+    #     print('rundeck server connected.')
+    # else:
+    #     print('rundeck server connect failed.')
+    # password = linux.getPasswordOfInstanceByName('VMWare','EVR-NO-CCD1','evr-ccd1-l01257')
+    # linux.createChannel()
+    # linux.SSHToInstance('10.114.27.106',password)
+    # Hostname = linux.getHOSTNAMEofTestServer()
+    # print("Hostname = " + Hostname)
+    # IP = linux.getIPconfigofTestServer()
+    # print('IP = ' + str(IP))
+    # CPUnumber = linux.getCPUofTestServer()
+    # print('CPU number = ' + str(CPUnumber))
+    # MEM = linux.getMEMofTestServer()
+    # print('Memory = ' + MEM)
+    # Disk = linux.getDISKofTestServer()
+    # print('Disk = ' + Disk)
+    # NTPTimeZone = linux.getNTPofTestServer()
+    # print('NTP Timezone = ' + NTPTimeZone)
+    # DNSstatus = linux.getDNSofTestServer()
+    # print("DNS status = " + DNSstatus)
+    # ITMINFO = linux.getITMINFOofTestServer()
+    # print("ITM = " + ITMINFO)
+    # BigfixINFO = linux.getBigfixINFOofTestServer()
+    # print("Bigfix = " + BigfixINFO)
+    #
+    # linux.closeChannel()
+    # linux.closeConnection()
+    # linux = linux()
+    linux.getInstanceInfo('VMWare', 'EVR-NO-CCD1', 'test-vm-12847', '10.114.27.13')

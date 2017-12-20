@@ -1,0 +1,210 @@
+2017-12-20 11:10:35 preproductlinux.py [line:54] INFO Created connection to rundeck server: 146.213.160.116
+2017-12-20 11:10:36 preproductlinux.py [line:75] INFO Last login: Wed Dec 20 04:06:57 2017 from ilp-alfrid.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+2017-12-20 11:10:41 preproductlinux.py [line:87] INFO export VAULT_ADDR=http://127.0.0.1:8200
+[e214375@rundeckppr1 ~]$ export VAULT_ADDR=http://127.0.0.1:8200
+[e214375@rundeckppr1 ~]$
+2017-12-20 11:10:47 preproductlinux.py [line:87] INFO vault auth -method=ldap username=e214375
+Password (will be hidden):
+2017-12-20 11:10:52 preproductlinux.py [line:87] INFO Successfully authenticated! You are now logged in.
+The token below is already saved in the session. You do not
+need to "vault auth" again with the token.
+token: 546c26f2-5569-fab3-f0b7-f8cde007d148
+token_duration: 2764800
+token_policies: [default testteam]
+[e214375@rundeckppr1 ~]$
+2017-12-20 11:10:57 preproductlinux.py [line:87] INFO vault read secret/OS/VMWare/EVR-NO-CCD1/test-vm-12847
+Key             	Value
+---             	-----
+refresh_interval	768h0m0s
+descritpion     	root
+password        	cbMKdnH4UQLfKQAamvPK
+
+[e214375@rundeckppr1 ~]$
+2017-12-20 11:10:58 preproductlinux.py [line:75] INFO Last login: Wed Dec 20 04:10:33 2017 from ilp-alfrid.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+
+[e214375@rundeckppr1 ~]$
+2017-12-20 11:11:03 preproductlinux.py [line:87] INFO ssh root@10.114.27.13
+root@10.114.27.13's password:
+2017-12-20 11:11:08 preproductlinux.py [line:87] INFO Last login: Wed Dec 20 04:07:03 2017 from 146.213.160.116
+IBMs internal systems must only be used for conducting IBMs business or for purposes authorized by IBM management.
+[root@test-vm-12847 ~]#
+2017-12-20 11:11:13 preproductlinux.py [line:87] INFO hostname
+test-vm-12847.novalocal
+[root@test-vm-12847 ~]#
+2017-12-20 11:11:18 preproductlinux.py [line:87] INFO ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.114.27.13  netmask 255.255.255.192  broadcast 10.114.27.63
+        ether fa:16:3e:2b:6a:1e  txqueuelen 1000  (Ethernet)
+        RX packets 153191  bytes 289485374 (276.0 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 153852  bytes 20305448 (19.3 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1  (Local Loopback)
+        RX packets 29826  bytes 1565995 (1.4 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 29826  bytes 1565995 (1.4 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@test-vm-12847 ~]#
+2017-12-20 11:11:23 preproductlinux.py [line:87] INFO cat /proc/cpuinfo
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 79
+model name	: Intel(R) Xeon(R) CPU E5-2690 v4 @ 2.60GHz
+stepping	: 1
+microcode	: 0xb00001d
+cpu MHz		: 2600.034
+cache size	: 35840 KB
+physical id	: 0
+siblings	: 1
+core id		: 0
+cpu cores	: 1
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc eagerfpu pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 invpcid rtm rdseed adx smap xsaveopt arat
+bogomips	: 5199.99
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 42 bits physical, 48 bits virtual
+power management:
+
+[root@test-vm-12847 ~]#
+2017-12-20 11:11:28 preproductlinux.py [line:87] INFO free -h
+              total        used        free      shared  buff/cache   available
+Mem:           3.7G        154M        1.6G         40M        2.0G        3.2G
+Swap:            0B          0B          0B
+[root@test-vm-12847 ~]#
+2017-12-20 11:11:33 preproductlinux.py [line:87] INFO lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0  128G  0 disk 
+└─sda1   8:1    0  128G  0 part /
+[root@test-vm-12847 ~]#
+2017-12-20 11:11:38 preproductlinux.py [line:87] INFO timedatectl
+      Local time: Wed 2017-12-20 04:11:30 CET
+  Universal time: Wed 2017-12-20 03:11:30 UTC
+        RTC time: Wed 2017-12-20 03:11:30
+       Time zone: Europe/Oslo (CET, +0100)
+     NTP enabled: yes
+NTP synchronized: yes
+ RTC in local TZ: no
+      DST active: no
+ Last DST change: DST ended at
+                  Sun 2017-10-29 02:59:59 CEST
+                  Sun 2017-10-29 02:00:00 CET
+ Next DST change: DST begins (the clock jumps one hour forward) at
+                  Sun 2018-03-25 01:59:59 CET
+                  Sun 2018-03-25 03:00:00 CEST
+[root@test-vm-12847 ~]#
+2017-12-20 11:11:43 preproductlinux.py [line:87] INFO ping www.google.com -c 5
+PING www.google.com (216.58.209.132) 56(84) bytes of data.
+64 bytes from arn09s05-in-f4.1e100.net (216.58.209.132): icmp_seq=1 ttl=49 time=9.54 ms
+64 bytes from arn09s05-in-f4.1e100.net (216.58.209.132): icmp_seq=2 ttl=49 time=9.45 ms
+64 bytes from arn09s05-in-f4.1e100.net (216.58.209.132): icmp_seq=3 ttl=49 time=9.50 ms
+64 bytes from arn09s05-in-f4.1e100.net (216.58.209.132): icmp_seq=4 ttl=49 time=9.28 ms
+64 bytes from arn09s05-in-f4.1e100.net (216.58.209.132): icmp_seq=5 ttl=49 time=9.18 ms
+
+--- www.google.com ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4005ms
+rtt min/avg/max/mdev = 9.180/9.393/9.542/0.139 ms
+[root@test-vm-12847 ~]#
+2017-12-20 11:11:48 preproductlinux.py [line:87] INFO ps -ef|grep ITM --color=never
+root      3608  3556  0 04:11 pts/0    00:00:00 grep --color=auto ITM --color=never
+root      6075     1  0 Dec14 ?        00:00:08 /opt/IBM/ITM/lx8266/lz/bin/kcawd
+root     24284     1  0 Dec14 ?        00:00:48 /opt/IBM/ITM/lx8266/lz/bin/klzagent
+root     27816     1  0 Dec14 ?        00:00:30 /opt/IBM/ITM/lx8266/08/bin/k08agent
+[root@test-vm-12847 ~]#
+2017-12-20 11:11:53 preproductlinux.py [line:87] INFO /opt/IBM/ITM/bin/cinfo -r
+ 
+*********** Wed Dec 20 04:11:45 CET 2017 ******************
+User: root Groups: root
+Host name : test-vm-12847	 Installer Lvl:06.30.06.00
+CandleHome: /opt/IBM/ITM
+***********************************************************
+Host           Prod  PID    Owner  Start  ID    ..Status  
+test-vm-12847  lz    24284  root   Dec14  None  ...running
+test-vm-12847  08    27816  root   Dec14  None  ...running
+[root@test-vm-12847 ~]#
+2017-12-20 11:11:58 preproductlinux.py [line:87] INFO /opt/IBM/ITM/bin/cinfo -o
+ 
+*********** Wed Dec 20 04:11:50 CET 2017 ******************
+User: root Groups: root
+Host name : test-vm-12847	 Installer Lvl:06.30.06.00
+CandleHome: /opt/IBM/ITM
+***********************************************************
+
+Product	Instance Name
+08	None (default primary)
+
+Product	Instance Name
+lz	None (default primary)
+[root@test-vm-12847 ~]#
+2017-12-20 11:12:03 preproductlinux.py [line:87] INFO ps -ef|grep BESClient --color=never
+root      4678  3556  0 04:11 pts/0    00:00:00 grep --color=auto BESClient --color=never
+root     28394     1  0 Dec14 ?        00:00:29 /opt/BESClient/bin/BESClient
+[root@test-vm-12847 ~]#
+2017-12-20 11:12:08 preproductlinux.py [line:87] INFO /etc/init.d/besclient status
+BESClient (pid 28394) is running...
+[root@test-vm-12847 ~]#
+2017-12-20 11:12:13 preproductlinux.py [line:87] INFO cat /var/opt/BESClient/besclient.config
+
+[Software\BigFix\EnterpriseClient]
+EnterpriseClientFolder         = /opt/BESClient
+
+[Software\BigFix\EnterpriseClient\GlobalOptions]
+StoragePath                    = /var/opt/BESClient
+LibPath                        = /opt/BESClient/BESLib
+LastClientVersion              = 9.2.8.74
+ActionLockController           = console
+LastKnownClockShift            = 0
+RegCount                       = 2290
+
+[Software\BigFix\EnterpriseClient\Settings\Client\C_Code]
+value                          = E064
+
+[Software\BigFix\EnterpriseClient\Settings\Client\GTS_DEVICE]
+value                          = SERVER
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__RelayServer1]
+value                          = http://146.89.183.34:52311/bfmirror/downloads/
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Register_Affiliation_SeekList]
+value                          = E064ALL
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Report_MinimumInterval]
+value                          = 300
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__RelaySelect_Automatic]
+value                          = 0
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Resource_WorkNormal]
+value                          = 10
+
+[Software\BigFix\EnterpriseClient\Settings\Client\_BESClient_Resource_SleepNormal]
+value                          = 480
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__Relay_Control_RootServer]
+value                          = http://10.105.127.34:52311/cgi-bin/bfgather.exe/actionsite
+effective date                 = Wed,%2020%20Dec%202017%2004:05:39%20+0100
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__Relay_Control_Server1]
+value                          = http://146.89.183.34:52311
+effective date                 = Wed,%2020%20Dec%202017%2004:09:11%20+0100
+
+[Software\BigFix\EnterpriseClient\Settings\Client\__Relay_Control_Server2]
+value                          = ""
+effective date                 = Wed,%2020%20Dec%202017%2004:09:11%20+0100
+
+[root@test-vm-12847 ~]#
+2017-12-20 11:12:13 preproductlinux.py [line:67] INFO Connection to rundeck server closed.

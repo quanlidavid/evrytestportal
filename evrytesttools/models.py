@@ -14,6 +14,8 @@ class VIORecordsManager(models.Manager):
                                 availabilityzone=instanceinfo['availabilityzone'],
                                 powerstate=instanceinfo['powerstate'])
         return viorecord
+
+
 class VIORecord(models.Model):
     date = models.DateTimeField(auto_now=True, auto_created=True)
     instancename = models.CharField(max_length=100)
@@ -165,3 +167,57 @@ class SRCreateServerLinuxRecord(models.Model):
 
     def __str__(self):
         return self.hostname + ' - ' + self.srsubmitedinfo
+
+# for linux instance
+class LinuxInfoRecordsManager(models.Manager):
+    def create_LinuxInfoRecord(self, linuxinstanceinfo):
+        log=''
+        if linuxinstanceinfo['logfilepath'] != None:
+            with open(linuxinstanceinfo['logfilepath'], 'r') as file:
+                log = file.read()
+        linuxinforecord = self.create(hypervisortogetpassword=linuxinstanceinfo['hypervisor'],
+                                      customertogetpassword=linuxinstanceinfo['customer'],
+                                      instancehostnametogetpassword=linuxinstanceinfo['instancehostname'],
+                                      instanceiptogetpassword=linuxinstanceinfo['instanceip'],
+                                      Hostname=linuxinstanceinfo['Hostname'],
+                                      IP=linuxinstanceinfo['IP'],
+                                      CPUnumber=linuxinstanceinfo['CPUnumber'],
+                                      MEM=linuxinstanceinfo['MEM'],
+                                      Disk=linuxinstanceinfo['Disk'],
+                                      NTPTimeZone=linuxinstanceinfo['NTPTimeZone'],
+                                      DNSstatus=linuxinstanceinfo['DNSstatus'],
+                                      ITMINFO=linuxinstanceinfo['ITMINFO'],
+                                      BigfixINFO=linuxinstanceinfo['BigfixINFO'],
+                                      InstancePassword=linuxinstanceinfo['InstancePassword'],
+                                      logfilepath=linuxinstanceinfo['logfilepath'],
+                                      detailogs=log)
+        return linuxinforecord
+
+
+class LinuxInfoRecord(models.Model):
+    date = models.DateTimeField(auto_now=True, auto_created=True)
+    hypervisortogetpassword = models.CharField(max_length=100)
+    customertogetpassword = models.CharField(max_length=100)
+    instancehostnametogetpassword = models.CharField(max_length=100)
+    instanceiptogetpassword = models.CharField(max_length=100)
+    Hostname = models.CharField(max_length=100)
+    IP = models.CharField(max_length=100)
+    CPUnumber = models.CharField(max_length=100)
+    MEM = models.CharField(max_length=100)
+    Disk = models.CharField(max_length=100)
+    NTPTimeZone = models.CharField(max_length=100)
+    DNSstatus = models.CharField(max_length=100)
+    ITMINFO = models.CharField(max_length=100)
+    BigfixINFO = models.CharField(max_length=100)
+    InstancePassword = models.CharField(max_length=100)
+    logfilepath = models.CharField(max_length=100)
+    detailogs = models.TextField(max_length=5000)
+
+
+    objects = LinuxInfoRecordsManager()
+
+    class Meta:
+        ordering = ('-Hostname', '-date')
+
+    def __str__(self):
+        return self.Hostname

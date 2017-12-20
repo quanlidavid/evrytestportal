@@ -158,4 +158,49 @@ Query info from {{ table }}
         </tbody>
     </table>
     {% endif %}
+
+
+    {% if table == 'LinuxInfoRecord' %}
+    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+        <caption><h3>Linux instance info history</h3></caption>
+        <thead>
+        <tr>
+            <th>QueryDate</th>
+            <th>Hostname</th>
+            <th>IP</th>
+            <th>CPUnumber</th>
+            <th>MEM</th>
+            <th>Disk</th>
+            <th>NTPTimeZone</th>
+            <th>DNSstatus</th>
+            <th>ITMINFO</th>
+            <th>BigfixINFO</th>
+            <th>InstancePassword</th>
+            <th>Hypervisor</th>
+            <th>Customer</th>
+            <th>See detail logs</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for linuxinstanceinfo in queryset %}
+            <tr>
+                <td>{{ linuxinstanceinfo.date }}</td>
+                <td>{{ linuxinstanceinfo.Hostname }}</td>
+                <td>{{ linuxinstanceinfo.IP }}</td>
+                <td>{{ linuxinstanceinfo.CPUnumber }}</td>
+                <td>{{ linuxinstanceinfo.MEM }}</td>
+                <td>{{ linuxinstanceinfo.Disk }}</td>
+                <td>{{ linuxinstanceinfo.NTPTimeZone }}</td>
+                <td>{{ linuxinstanceinfo.DNSstatus }}</td>
+                <td>{{ linuxinstanceinfo.ITMINFO }}</td>
+                <td>{{ linuxinstanceinfo.BigfixINFO }}</td>
+                <td>{{ linuxinstanceinfo.InstancePassword }}</td>
+                <td>{{ linuxinstanceinfo.hypervisortogetpassword }}</td>
+                <td>{{ linuxinstanceinfo.customertogetpassword }}</td>
+                <td><a href="/evrytestportal/linuxdetaillog?logpath={{ linuxinstanceinfo.logfilepath }}">details</a></td>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
 {% endblock %}

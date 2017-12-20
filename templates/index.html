@@ -7,7 +7,7 @@
 {% block content %}
     <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
         <tr>
-            <th rowspan="3" style="text-align: center; font-size: large">Tools for ICD</th>
+            <th rowspan="3" style="text-align: center; font-size: large"><br><br>Tools for ICD</th>
             <td>
                 <a href="/evrytestportal/icd_create_linux_sr">Create SR - Linux Provision</a>
             </td>
@@ -33,11 +33,29 @@
             </td>
         </tr>
         <tr>
-            <th>Tools for VIO</th>
-            <td><a href="/evrytestportal/">Not ready</a><br><a href="icd">Not ready</a></td>
+            <th style="text-align: center; font-size: large">Tools for VIO</th>
+            <td>
+                <a href="/evrytestportal/vioinfo">Query instance in VIO</a>
+            </td>
+            <td>
+                <a href="icdhistory/VIORecord/">History of VIO query</a>
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align: center; font-size: large">Tools for Linux Instance</th>
+            <td>
+                <a href="/evrytestportal/linuxinstanceinfo">Get Linux Instance Info</a>
+            </td>
+            <td>
+                <a href="icdhistory/LinuxInfoRecord/">History of Linux Instance</a>
+            </td>
         </tr>
         <tr>
             <th>Tools for Rundeck</th>
+            <td><a href="/evrytestportal/">Not ready</a><br><a href="icd">Not ready</a></td>
+        </tr>
+        <tr>
+            <th>Tools for Openstack</th>
             <td><a href="/evrytestportal/">Not ready</a><br><a href="icd">Not ready</a></td>
         </tr>
     </table>
