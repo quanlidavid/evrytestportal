@@ -203,4 +203,48 @@ Query info from {{ table }}
     </table>
     {% endif %}
 
+
+    {% if table == 'RundeckEecord' %}
+    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+        <caption><h3>Rundeck info history</h3></caption>
+        <thead>
+        <tr>
+            <th>QueryDate</th>
+            <th>SR ID</th>
+            <th>ICD Job ID<</th>
+            <th>ICD Job Status</th>
+            <th>ICD Job Duration</th>
+            <th>Workorder ID</th>
+            <th>PrivateCloud Job ID</th>
+            <th>PrivateCloud Job Status</th>
+            <th>PrivateCloud Job Duration</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for rundeckJobInfo in queryset %}
+            <tr>
+                <td>{{ rundeckJobInfo.date }}</td>
+                <td>{{ rundeckJobInfo.srid }}</td>
+                <td>{{ rundeckJobInfo.icdDispatcherJobID }}</td>
+                <td>{{ rundeckJobInfo.icdDispatcherJobStatus }}</td>
+                <td>{{ rundeckJobInfo.icdDispatcherJobDuration }}</td>
+                <td>{{ rundeckJobInfo.workorderid }}</td>
+                <td>{{ rundeckJobInfo.privatecloudJobID }}</td>
+                <td>{{ rundeckJobInfo.privatecloudJobStatus }}</td>
+                <td>{{ rundeckJobInfo.privatecloudJobDuration }}</td>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
 {% endblock %}
+
+
+        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
+        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
+        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
+        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
+        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
+        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
+        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
+        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>

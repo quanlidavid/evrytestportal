@@ -1,9 +1,7 @@
 from django.db import models
 
 
-# Create your models here.
 # for vio record
-
 class VIORecordsManager(models.Manager):
     def create_VIORecord(self, instanceinfo):
         viorecord = self.create(instancename=instanceinfo['instancename'],
@@ -168,10 +166,11 @@ class SRCreateServerLinuxRecord(models.Model):
     def __str__(self):
         return self.hostname + ' - ' + self.srsubmitedinfo
 
+
 # for linux instance
 class LinuxInfoRecordsManager(models.Manager):
     def create_LinuxInfoRecord(self, linuxinstanceinfo):
-        log=''
+        log = ''
         if linuxinstanceinfo['logfilepath'] != None:
             with open(linuxinstanceinfo['logfilepath'], 'r') as file:
                 log = file.read()
@@ -213,7 +212,6 @@ class LinuxInfoRecord(models.Model):
     logfilepath = models.CharField(max_length=100)
     detailogs = models.TextField(max_length=5000)
 
-
     objects = LinuxInfoRecordsManager()
 
     class Meta:
@@ -221,3 +219,37 @@ class LinuxInfoRecord(models.Model):
 
     def __str__(self):
         return self.Hostname
+
+
+# for rundeck record
+class RundeckRecordsManager(models.Manager):
+    def create_RundeckRecord(self, rundeckJobInfo):
+        rundeckrecord = self.create(srid=rundeckJobInfo['srid'],
+                                    icdDispatcherJobID=rundeckJobInfo['icdDispatcherJobID'],
+                                    icdDispatcherJobStatus=rundeckJobInfo['icdDispatcherJobStatus'],
+                                    icdDispatcherJobDuration=rundeckJobInfo['icdDispatcherJobDuration'],
+                                    workorderid=rundeckJobInfo['workorderid'],
+                                    privatecloudJobID=rundeckJobInfo['privatecloudJobID'],
+                                    privatecloudJobStatus=rundeckJobInfo['privatecloudJobStatus'],
+                                    privatecloudJobDuration=rundeckJobInfo['privatecloudJobDuration'])
+        return rundeckrecord
+
+
+class RundeckRecord(models.Model):
+    date = models.DateTimeField(auto_now=True, auto_created=True)
+    srid = models.CharField(max_length=100)
+    icdDispatcherJobID = models.CharField(max_length=100)
+    icdDispatcherJobStatus = models.CharField(max_length=100)
+    icdDispatcherJobDuration = models.CharField(max_length=100)
+    workorderid = models.CharField(max_length=100)
+    privatecloudJobID = models.CharField(max_length=100)
+    privatecloudJobStatus = models.CharField(max_length=100)
+    privatecloudJobDuration = models.CharField(max_length=100)
+
+    objects = RundeckRecordsManager()
+
+    class Meta:
+        ordering = ('-srid', '-date')
+
+    def __str__(self):
+        return self.srid

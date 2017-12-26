@@ -6,7 +6,7 @@ import re, json
 urllib3.disable_warnings()
 
 
-class loginfailedException(BaseException):
+class rundeckloginfailedException(BaseException):
     def __init__(self, mesg="Login failed. Maybe username/password was wrong."):
         self.mesg = mesg
 
@@ -22,7 +22,7 @@ class sridnotfoundException(BaseException):
         return self.mesg
 
 
-def get_rundeck_info(srid, j_username, j_password):
+def get_rundeck_info(srid, j_username, j_password, icd_max=30, privatecloud_max=100):
     srid = 'SR' + ''.join(re.findall('\d+', srid))
     s = requests.Session()
     headers = {
@@ -39,7 +39,7 @@ def get_rundeck_info(srid, j_username, j_password):
     r = s.post('https://rundeckpprha.cloud.cosng.net/user/j_security_check', data=payload, headers=headers)
 
     # open ICD
-    r = s.get('https://rundeckpprha.cloud.cosng.net/project/ICD/activity?max=100')
+    r = s.get('https://rundeckpprha.cloud.cosng.net/project/ICD/activity?max=' + icd_max)
     soup = BeautifulSoup(r.text, 'html5lib')
     # status: FAILED,'SUCCEEDED'
     dispatchers = soup.find_all('tr', attrs={'class': 'link'})
@@ -65,7 +65,7 @@ def get_rundeck_info(srid, j_username, j_password):
             icdDispatcherJobDuration = item.find('span', {'class': 'ago'}).text
 
             # open privatecloud
-            r = s.get('https://rundeckpprha.cloud.cosng.net/project/PrivateCloud/activity?max=200')
+            r = s.get('https://rundeckpprha.cloud.cosng.net/project/PrivateCloud/activity?max=' + privatecloud_max)
             soup = BeautifulSoup(r.text, 'html5lib')
             events = soup.find_all('tr', attrs={'class': 'link'})
             for item in events:
@@ -80,8 +80,8 @@ def get_rundeck_info(srid, j_username, j_password):
     # logout
     r = s.get('https://rundeckpprha.cloud.cosng.net/user/logout')
 
-    return {'icdDispatcherJobID': icdDispatcherJobID, 'icdDispatcherJobStatus': icdDispatcherJobStatus,
-            'icdDispatcherJobDuration': icdDispatcherJobDuration, 'WORKORDERID': workorderid,
+    return {'srid': srid, 'icdDispatcherJobID': icdDispatcherJobID, 'icdDispatcherJobStatus': icdDispatcherJobStatus,
+            'icdDispatcherJobDuration': icdDispatcherJobDuration, 'workorderid': workorderid,
             'privatecloudJobID': privatecloudJobID, 'privatecloudJobStatus': privatecloudJobStatus,
             'privatecloudJobDuration': privatecloudJobDuration}
 

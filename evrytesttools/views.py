@@ -7,7 +7,7 @@ from evrytesttools.instanceutil.icdutil import loginfailedException, sridnotfoun
     get_cmdb_icd_info_spec
 from evrytesttools import models
 from evrytesttools.vpnutil import slvpn
-from evrytesttools.instanceutil import vioutil, preproductlinux
+from evrytesttools.instanceutil import vioutil, preproductlinux,rundeckutil
 
 
 # Create your views here.
@@ -97,6 +97,8 @@ def icd_history(request, table):
         queryset = models.VIORecord.objects.all()
     elif table == 'LinuxInfoRecord':
         queryset = models.LinuxInfoRecord.objects.all()
+    elif table == 'RundeckEecord':
+        queryset = models.RundeckRecord.objects.all()
     html = template.render(locals())
     return HttpResponse(html)
 
@@ -141,6 +143,24 @@ def vioinfo(request):
             viorecord = models.VIORecord.objects.create_VIORecord(instanceinfo)
             viorecord.save()
         except vioutil.viologinfailedException as e:
+            errormessage = e.mesg
+    html = template.render(locals())
+    return HttpResponse(html)
+
+def rundeckinfo(request):
+    template = get_template('rundeckinfo.html')
+    now = datetime.now()
+    srid = request.POST.get('srid')
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    icd_max = request.POST.get('icd_max')
+    private_max = request.POST.get('private_max')
+    if username != None and password != None and srid != None:
+        try:
+            rundeckJobInfo = rundeckutil.get_rundeck_info(srid, username, password,icd_max,private_max)
+            rundeckrecord = models.RundeckRecord.objects.create_RundeckRecord(rundeckJobInfo)
+            rundeckrecord.save()
+        except rundeckutil.rundeckloginfailedException as e:
             errormessage = e.mesg
     html = template.render(locals())
     return HttpResponse(html)

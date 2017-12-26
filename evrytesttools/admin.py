@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import VIORecord,QuerySRRecord,QueryCMDBRecord,SRCreateServerLinuxRecord,LinuxInfoRecord
+from .models import VIORecord,QuerySRRecord,QueryCMDBRecord,SRCreateServerLinuxRecord,LinuxInfoRecord,RundeckRecord
 # Register your models here.
 
 class VIORecordAdmin(admin.ModelAdmin):
@@ -26,3 +26,8 @@ class LinuxInfoRecordAdmin(admin.ModelAdmin):
     list_display = ('date','Hostname','IP','CPUnumber','MEM','Disk','InstancePassword','logfilepath','hypervisortogetpassword','customertogetpassword')
 
 admin.site.register(LinuxInfoRecord,LinuxInfoRecordAdmin)
+
+class RundeckRecordAdmin(admin.ModelAdmin):
+    list_display = ('date','srid','icdDispatcherJobID','icdDispatcherJobStatus','icdDispatcherJobDuration','workorderid','privatecloudJobID','privatecloudJobStatus','privatecloudJobDuration')
+
+admin.site.register(RundeckRecord,RundeckRecordAdmin)

@@ -16,5 +16,6 @@ urlpatterns = [
     path('vioinfo/',views.vioinfo),
     path('linuxinstanceinfo/',views.linuxinstanceinfo),
     path('linuxdetaillog/',views.linuxdetailslog),
+    path('rundeckinfo/',views.rundeckinfo),
     # path('post/<slug:slug>', showpost),
 ]
