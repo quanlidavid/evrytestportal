@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 {% load markdown_deux_tags %}
 {% block title %}
-Query info from {{ table }}
+    Query info from {{ table }}
 {% endblock %}
 {% block headmessage %}
     <h3 style="font-family: 'Arial Black'">Query info from {{ table }}</h3>
@@ -10,60 +10,61 @@ Query info from {{ table }}
 {% block content %}
 
     {% if table == 'QueryCMDBRecord' %}
-    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
-        <caption><h3>CMDB info from ICD history</h3></caption>
-        <thead>
-        <tr>
-            <th>QueryDate</th>
-            <th>Hostname</th>
-            <th>COMPUTERSYSTEM_NAME</th>
-            <th>COMPUTERSYSTEM_NUMCPUS</th>
-            <th>COMPUTERSYSTEM_MEMORYSIZE</th>
-            <th>COMPUTERSYSTEM_TSHIRTSIZE</th>
-            <th>COMPUTERSYSTEM_OPERATIONALSTATUS</th>
-            <th>COMPUTERSYSTEM_MODEL</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for sr_cmdb_info in queryset %}
+        <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+            <caption><h3>CMDB info from ICD history</h3></caption>
+            <thead>
             <tr>
-                <td>{{ sr_cmdb_info.date }}</td>
-                <td>{{ sr_cmdb_info.hostname }}</td>
-                <td>{{ sr_cmdb_info.name }}</td>
-                <td>{{ sr_cmdb_info.numcpus }}</td>
-                <td>{{ sr_cmdb_info.memorysize }}</td>
-                <td>{{ sr_cmdb_info.tshirtsize }}</td>
-                <td>{{ sr_cmdb_info.operationalstatus }}</td>
-                <td>{{ sr_cmdb_info.model }}</td></tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                <th>QueryDate</th>
+                <th>Hostname</th>
+                <th>COMPUTERSYSTEM_NAME</th>
+                <th>COMPUTERSYSTEM_NUMCPUS</th>
+                <th>COMPUTERSYSTEM_MEMORYSIZE</th>
+                <th>COMPUTERSYSTEM_TSHIRTSIZE</th>
+                <th>COMPUTERSYSTEM_OPERATIONALSTATUS</th>
+                <th>COMPUTERSYSTEM_MODEL</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sr_cmdb_info in queryset %}
+                <tr>
+                    <td>{{ sr_cmdb_info.date }}</td>
+                    <td>{{ sr_cmdb_info.hostname }}</td>
+                    <td>{{ sr_cmdb_info.name }}</td>
+                    <td>{{ sr_cmdb_info.numcpus }}</td>
+                    <td>{{ sr_cmdb_info.memorysize }}</td>
+                    <td>{{ sr_cmdb_info.tshirtsize }}</td>
+                    <td>{{ sr_cmdb_info.operationalstatus }}</td>
+                    <td>{{ sr_cmdb_info.model }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 
     {% if table == 'QuerySRRecord' %}
-    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
-        <caption><h3>SR info from ICD history</h3></caption>
-        <thead>
-        <tr>
-            <th>Service Request Id</th>
-            <th>QueryDate</th>
-            <th>Summary</th>
-            <th>Classification Description</th>
-            <th>Status</th>
-            <th>Configuration Item Name</th>
-            <th>ITDIPADDRESS_EP(ip)</th>
-            <th>ITDHOSTNAME(hostname)</th>
-            <th>ITDCUSTOMER(customer)</th>
-            <th>ITDDISK0SIZE(disksize)</th>
-            <th>ITDMEMORY(memsize)</th>
-            <th>EVRVIRTUALSIZE(virtualsize)</th>
-            <th>EVRVCPUSIZE(cpusize)</th>
-            <th>ITDHYPERVISOR</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for sr_icd_info in queryset %}
+        <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+            <caption><h3>SR info from ICD history</h3></caption>
+            <thead>
             <tr>
+                <th>Service Request Id</th>
+                <th>QueryDate</th>
+                <th>Summary</th>
+                <th>Classification Description</th>
+                <th>Status</th>
+                <th>Configuration Item Name</th>
+                <th>ITDIPADDRESS_EP(ip)</th>
+                <th>ITDHOSTNAME(hostname)</th>
+                <th>ITDCUSTOMER(customer)</th>
+                <th>ITDDISK0SIZE(disksize)</th>
+                <th>ITDMEMORY(memsize)</th>
+                <th>EVRVIRTUALSIZE(virtualsize)</th>
+                <th>EVRVCPUSIZE(cpusize)</th>
+                <th>ITDHYPERVISOR</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sr_icd_info in queryset %}
+                <tr>
                 <td>{{ sr_icd_info.sr }}</td>
                 <td>{{ sr_icd_info.date }}</td>
                 <td>{{ sr_icd_info.summary }}</td>
@@ -78,36 +79,36 @@ Query info from {{ table }}
                 <td>{{ sr_icd_info.virtualsize }}</td>
                 <td>{{ sr_icd_info.cpusize }}</td>
                 <td>{{ sr_icd_info.hypervisor }}</td>
-        {% endfor %}
-        </tbody>
-    </table>
+            {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 
     {% if table == 'SRCreateServerLinuxRecord' %}
-    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
-        <caption><h3>SR info that create linux server in ICD history</h3></caption>
-        <thead>
-        <tr>
-            <th>QueryDate</th>
-            <th>Operation Username</th>
-            <th>Result of Service Request Submit</th>
-            <th>Hypervisor</th>
-            <th>Operating System Version</th>
-            <th>Hostname</th>
-            <th>T-Shirt Size</th>
-            <th>vCPUs</th>
-            <th>Memory Size (GB)</th>
-            <th>Customer</th>
-            <th>Customer Name</th>
-            <th>Security Zone</th>
-            <th>Environment</th>
-            <th>Service Level</th>
-            <th>Service Model</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for create_linux_sr_info in queryset %}
+        <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+            <caption><h3>SR info that create linux server in ICD history</h3></caption>
+            <thead>
             <tr>
+                <th>QueryDate</th>
+                <th>Operation Username</th>
+                <th>Result of Service Request Submit</th>
+                <th>Hypervisor</th>
+                <th>Operating System Version</th>
+                <th>Hostname</th>
+                <th>T-Shirt Size</th>
+                <th>vCPUs</th>
+                <th>Memory Size (GB)</th>
+                <th>Customer</th>
+                <th>Customer Name</th>
+                <th>Security Zone</th>
+                <th>Environment</th>
+                <th>Service Level</th>
+                <th>Service Model</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for create_linux_sr_info in queryset %}
+                <tr>
                 <td>{{ create_linux_sr_info.date }}</td>
                 <td>{{ create_linux_sr_info.operationusername }}</td>
                 <td>{{ create_linux_sr_info.srsubmitedinfo }}</td>
@@ -123,29 +124,29 @@ Query info from {{ table }}
                 <td>{{ create_linux_sr_info.environment }}</td>
                 <td>{{ create_linux_sr_info.servicelevel }}</td>
                 <td>{{ create_linux_sr_info.servicemodel }}</td>
-        {% endfor %}
-        </tbody>
-    </table>
+            {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 
     {% if table == 'VIORecord' %}
-    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
-        <caption><h3>VIO info history</h3></caption>
-        <thead>
-        <tr>
-            <th>QueryDate</th>
-            <th>Instance Name<</th>
-            <th>Image Name</th>
-            <th>IP Address</th>
-            <th>Size</th>
-            <th>Status</th>
-            <th>Availability Zone</th>
-            <th>Power State</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for instanceinfo in queryset %}
+        <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+            <caption><h3>VIO info history</h3></caption>
+            <thead>
             <tr>
+                <th>QueryDate</th>
+                <th>Instance Name<</th>
+                <th>Image Name</th>
+                <th>IP Address</th>
+                <th>Size</th>
+                <th>Status</th>
+                <th>Availability Zone</th>
+                <th>Power State</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for instanceinfo in queryset %}
+                <tr>
                 <td>{{ instanceinfo.date }}</td>
                 <td>{{ instanceinfo.instancename }}</td>
                 <td>{{ instanceinfo.imagename }}</td>
@@ -154,36 +155,36 @@ Query info from {{ table }}
                 <td>{{ instanceinfo.status }}</td>
                 <td>{{ instanceinfo.availabilityzone }}</td>
                 <td>{{ instanceinfo.powerstate }}</td>
-        {% endfor %}
-        </tbody>
-    </table>
+            {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 
 
     {% if table == 'LinuxInfoRecord' %}
-    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
-        <caption><h3>Linux instance info history</h3></caption>
-        <thead>
-        <tr>
-            <th>QueryDate</th>
-            <th>Hostname</th>
-            <th>IP</th>
-            <th>CPUnumber</th>
-            <th>MEM</th>
-            <th>Disk</th>
-            <th>NTPTimeZone</th>
-            <th>DNSstatus</th>
-            <th>ITMINFO</th>
-            <th>BigfixINFO</th>
-            <th>InstancePassword</th>
-            <th>Hypervisor</th>
-            <th>Customer</th>
-            <th>See detail logs</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for linuxinstanceinfo in queryset %}
+        <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+            <caption><h3>Linux instance info history</h3></caption>
+            <thead>
             <tr>
+                <th>QueryDate</th>
+                <th>Hostname</th>
+                <th>IP</th>
+                <th>CPUnumber</th>
+                <th>MEM</th>
+                <th>Disk</th>
+                <th>NTPTimeZone</th>
+                <th>DNSstatus</th>
+                <th>ITMINFO</th>
+                <th>BigfixINFO</th>
+                <th>InstancePassword</th>
+                <th>Hypervisor</th>
+                <th>Customer</th>
+                <th>See detail logs</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for linuxinstanceinfo in queryset %}
+                <tr>
                 <td>{{ linuxinstanceinfo.date }}</td>
                 <td>{{ linuxinstanceinfo.Hostname }}</td>
                 <td>{{ linuxinstanceinfo.IP }}</td>
@@ -197,32 +198,34 @@ Query info from {{ table }}
                 <td>{{ linuxinstanceinfo.InstancePassword }}</td>
                 <td>{{ linuxinstanceinfo.hypervisortogetpassword }}</td>
                 <td>{{ linuxinstanceinfo.customertogetpassword }}</td>
-                <td><a href="/evrytestportal/linuxdetaillog?logpath={{ linuxinstanceinfo.logfilepath }}">details</a></td>
-        {% endfor %}
-        </tbody>
-    </table>
+                <td><a href="/evrytestportal/linuxdetaillog?logpath={{ linuxinstanceinfo.logfilepath }}">details</a>
+                </td>
+            {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 
 
     {% if table == 'RundeckEecord' %}
-    <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
-        <caption><h3>Rundeck info history</h3></caption>
-        <thead>
-        <tr>
-            <th>QueryDate</th>
-            <th>SR ID</th>
-            <th>ICD Job ID<</th>
-            <th>ICD Job Status</th>
-            <th>ICD Job Duration</th>
-            <th>Workorder ID</th>
-            <th>PrivateCloud Job ID</th>
-            <th>PrivateCloud Job Status</th>
-            <th>PrivateCloud Job Duration</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for rundeckJobInfo in queryset %}
+        <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+            <caption><h3>Rundeck info history</h3></caption>
+            <thead>
             <tr>
+                <th>QueryDate</th>
+                <th>SR ID</th>
+                <th>ICD Dispatcher Job ID<</th>
+                <th>ICD Job Status</th>
+                <th>ICD Job Duration</th>
+                <th>Workorder ID</th>
+                <th>PrivateCloud Job ID</th>
+                <th>PrivateCloud Job Title</th>
+                <th>PrivateCloud Job Status</th>
+                <th>PrivateCloud Job Duration</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for rundeckJobInfo in queryset %}
+                <tr>
                 <td>{{ rundeckJobInfo.date }}</td>
                 <td>{{ rundeckJobInfo.srid }}</td>
                 <td>{{ rundeckJobInfo.icdDispatcherJobID }}</td>
@@ -230,21 +233,46 @@ Query info from {{ table }}
                 <td>{{ rundeckJobInfo.icdDispatcherJobDuration }}</td>
                 <td>{{ rundeckJobInfo.workorderid }}</td>
                 <td>{{ rundeckJobInfo.privatecloudJobID }}</td>
+                <td>{{ rundeckJobInfo.privatecloudJobTitle }}</td>
                 <td>{{ rundeckJobInfo.privatecloudJobStatus }}</td>
                 <td>{{ rundeckJobInfo.privatecloudJobDuration }}</td>
-        {% endfor %}
-        </tbody>
-    </table>
+            {% endfor %}
+            </tbody>
+        </table>
     {% endif %}
 
 {% endblock %}
 
 
-        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
-        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
-        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
-        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
-        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
-        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
-        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
-        <tr><th></th><td>{{ rundeckJobInfo. }}</td></tr>
+<tr>
+    <th></th>
+    <td>{{ rundeckJobInfo. }}</td>
+</tr>
+<tr>
+    <th></th>
+    <td>{{ rundeckJobInfo. }}</td>
+</tr>
+<tr>
+    <th></th>
+    <td>{{ rundeckJobInfo. }}</td>
+</tr>
+<tr>
+    <th></th>
+    <td>{{ rundeckJobInfo. }}</td>
+</tr>
+<tr>
+    <th></th>
+    <td>{{ rundeckJobInfo. }}</td>
+</tr>
+<tr>
+    <th></th>
+    <td>{{ rundeckJobInfo. }}</td>
+</tr>
+<tr>
+    <th></th>
+    <td>{{ rundeckJobInfo. }}</td>
+</tr>
+<tr>
+    <th></th>
+    <td>{{ rundeckJobInfo. }}</td>
+</tr>

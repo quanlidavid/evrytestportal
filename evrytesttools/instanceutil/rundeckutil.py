@@ -39,7 +39,7 @@ def get_rundeck_info(srid, j_username, j_password, icd_max=30, privatecloud_max=
     r = s.post('https://rundeckpprha.cloud.cosng.net/user/j_security_check', data=payload, headers=headers)
 
     # open ICD
-    r = s.get('https://rundeckpprha.cloud.cosng.net/project/ICD/activity?max=' + icd_max)
+    r = s.get('https://rundeckpprha.cloud.cosng.net/project/ICD/activity?max=' + str(icd_max))
     soup = BeautifulSoup(r.text, 'html5lib')
     # status: FAILED,'SUCCEEDED'
     dispatchers = soup.find_all('tr', attrs={'class': 'link'})
@@ -51,6 +51,7 @@ def get_rundeck_info(srid, j_username, j_password, icd_max=30, privatecloud_max=
     privatecloudJobID = 'NotFound'
     privatecloudJobStatus = 'NotFound'
     privatecloudJobDuration = 'NotFound'
+    privatecloudJobTitle = 'NotFound'
 
     for item in dispatchers:
         try:
@@ -65,7 +66,7 @@ def get_rundeck_info(srid, j_username, j_password, icd_max=30, privatecloud_max=
             icdDispatcherJobDuration = item.find('span', {'class': 'ago'}).text
 
             # open privatecloud
-            r = s.get('https://rundeckpprha.cloud.cosng.net/project/PrivateCloud/activity?max=' + privatecloud_max)
+            r = s.get('https://rundeckpprha.cloud.cosng.net/project/PrivateCloud/activity?max=' + str(privatecloud_max))
             soup = BeautifulSoup(r.text, 'html5lib')
             events = soup.find_all('tr', attrs={'class': 'link'})
             for item in events:
@@ -73,6 +74,7 @@ def get_rundeck_info(srid, j_username, j_password, icd_max=30, privatecloud_max=
                 if bool(re.search(workorderid, privatecloudEventargs, re.IGNORECASE)):
                     privatecloudJobStatus = item.find('i')['data-execstate']
                     privatecloudJobID = item.find('a')['href'].split('/')[-1]
+                    privatecloudJobTitle = item.find('td', attrs={'class': 'eventtitle'}).contents[2].strip()
                     privatecloudJobDuration = item.find('span', {'class': 'ago'}).text
                     break
             break
@@ -83,7 +85,7 @@ def get_rundeck_info(srid, j_username, j_password, icd_max=30, privatecloud_max=
     return {'srid': srid, 'icdDispatcherJobID': icdDispatcherJobID, 'icdDispatcherJobStatus': icdDispatcherJobStatus,
             'icdDispatcherJobDuration': icdDispatcherJobDuration, 'workorderid': workorderid,
             'privatecloudJobID': privatecloudJobID, 'privatecloudJobStatus': privatecloudJobStatus,
-            'privatecloudJobDuration': privatecloudJobDuration}
+            'privatecloudJobDuration': privatecloudJobDuration,'privatecloudJobTitle':privatecloudJobTitle}
 
 
 if __name__ == '__main__':

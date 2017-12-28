@@ -230,6 +230,7 @@ class RundeckRecordsManager(models.Manager):
                                     icdDispatcherJobDuration=rundeckJobInfo['icdDispatcherJobDuration'],
                                     workorderid=rundeckJobInfo['workorderid'],
                                     privatecloudJobID=rundeckJobInfo['privatecloudJobID'],
+                                    privatecloudJobTitle=rundeckJobInfo['privatecloudJobTitle'],
                                     privatecloudJobStatus=rundeckJobInfo['privatecloudJobStatus'],
                                     privatecloudJobDuration=rundeckJobInfo['privatecloudJobDuration'])
         return rundeckrecord
@@ -243,6 +244,7 @@ class RundeckRecord(models.Model):
     icdDispatcherJobDuration = models.CharField(max_length=100)
     workorderid = models.CharField(max_length=100)
     privatecloudJobID = models.CharField(max_length=100)
+    privatecloudJobTitle = models.CharField(max_length=100)
     privatecloudJobStatus = models.CharField(max_length=100)
     privatecloudJobDuration = models.CharField(max_length=100)
 
