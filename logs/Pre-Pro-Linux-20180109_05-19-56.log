@@ -1,0 +1,8 @@
+2018-01-09 13:19:58 preproductlinux.py [line:54] INFO Created connection to rundeck server: 146.213.160.116
+2018-01-09 13:19:59 preproductlinux.py [line:75] INFO Last login: Tue Jan  9 06:08:47 2018 from ilp-alfrid.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+2018-01-09 13:20:04 preproductlinux.py [line:87] INFO export VAULT_ADDR=http://127.0.0.1:8200
+[e214375@rundeckppr1 ~]$ export VAULT_ADDR=http://127.0.0.1:8200
+[e214375@rundeckppr1 ~]$
+2018-01-09 13:20:23 preproductlinux.py [line:87] INFO 

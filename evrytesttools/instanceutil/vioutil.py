@@ -19,7 +19,7 @@ class sridnotfoundException(BaseException):
         return self.mesg
 
 
-def getInstanceInfoOfVIO(domain, instances__filter__q, username='e214375', password='Passw0rd2018'):
+def getInstanceInfoOfVIO(domain, instances__filter__q, username='e214375', password='Evry2018'):
     fake_email = username
     fake_password = password
 

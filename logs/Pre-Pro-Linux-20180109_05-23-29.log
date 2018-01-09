@@ -1,0 +1,29 @@
+2018-01-09 13:23:31 preproductlinux.py [line:54] INFO Created connection to rundeck server: 146.213.160.116
+2018-01-09 13:23:33 preproductlinux.py [line:75] INFO Last login: Tue Jan  9 06:19:58 2018 from ilp-alfrid.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+
+[e214375@rundeckppr1 ~]$
+2018-01-09 13:23:38 preproductlinux.py [line:87] INFO export VAULT_ADDR=http://127.0.0.1:8200
+[e214375@rundeckppr1 ~]$
+2018-01-09 13:23:55 preproductlinux.py [line:87] INFO vault auth -method=ldap username=e214375
+Password (will be hidden):
+2018-01-09 13:24:13 preproductlinux.py [line:87] INFO Successfully authenticated! You are now logged in.
+The token below is already saved in the session. You do not
+need to "vault auth" again with the token.
+token: 0611d4cb-eeec-06e5-7630-bc2c4735c021
+token_duration: 2764800
+token_policies: [default testteam]
+[e214375@rundeckppr1 ~]$
+2018-01-09 13:24:27 preproductlinux.py [line:87] INFO vault read secret/OS/VMWare/EVR-NO-CCD1/EVR-CCD1-L01484 [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K4
+No value found at secret/OS/VMWare/EVR-NO-CCD1/EVR-CCD1-L01484
+[e214375@rundeckppr1 ~]$
+2018-01-09 13:24:29 preproductlinux.py [line:75] INFO Last login: Tue Jan  9 06:23:31 2018 from ilp-elfy.unix.cosng.net
+
+RHN kickstart on 2016-12-09
+
+[e214375@rundeckppr1 ~]$
+2018-01-09 13:24:34 preproductlinux.py [line:87] INFO ssh root@10.114.27.22
+root@10.114.27.22's password:
+2018-01-09 13:24:39 preproductlinux.py [line:87] INFO Permission denied, please try again.
+root@10.114.27.22's password:

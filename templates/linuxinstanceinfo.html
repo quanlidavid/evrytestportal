@@ -11,7 +11,11 @@ Query SR info from ICD
     <form method="post" action=".">
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="instancehostname">Instance Hostname:</label>
+                <label for="domain">End to End ID:</label>
+                <input class="form-control" name="endtoendID" id="endtoendID" type="text" placeholder="End to End ID">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="instancehostname">Instance Hostname:<br>(It is case sensitive, need to copy from VIO portal)</label>
                 <input type="text" class="form-control" id="instancehostname" name="instancehostname" value="test-vm-12847">
             </div>
             <div class="form-group col-md-3">
@@ -24,6 +28,14 @@ Query SR info from ICD
             </div>
         </div>
         <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" value="e214375">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" value="Evry2018">
+            </div>
             <div class="form-group col-md-6">
             <label for="hypervisor">Hypervisior: </label>
             <select class="custom-select" id="hypervisor" name="hypervisor">

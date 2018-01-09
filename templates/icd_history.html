@@ -135,7 +135,7 @@
             <thead>
             <tr>
                 <th>QueryDate</th>
-                <th>Instance Name<</th>
+                <th>Instance Name</th>
                 <th>Image Name</th>
                 <th>IP Address</th>
                 <th>Size</th>
@@ -213,7 +213,7 @@
             <tr>
                 <th>QueryDate</th>
                 <th>SR ID</th>
-                <th>ICD Dispatcher Job ID<</th>
+                <th>ICD Dispatcher Job ID</th>
                 <th>ICD Job Status</th>
                 <th>ICD Job Duration</th>
                 <th>Workorder ID</th>
@@ -241,38 +241,76 @@
         </table>
     {% endif %}
 
+
+    {% if table == 'EndtoendRecord' %}
+        <table class="table table-bordered table-striped table-condensed" style="font-size: 10pt">
+            <caption><h3>VIO info history</h3></caption>
+            <thead>
+            <tr>
+                <th>CreateDate</th>
+                <th>End to End test id</th>
+                <th>Create SR result</th>
+                <th>Query SR result</th>
+                <th>CMDB result</th>
+                <th>Instance result</th>
+                <th>VIO result</th>
+                <th>Rundeck result</th>
+                <th>Test log</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for endtoendinfo in queryset %}
+                <tr>
+                <td>{{ endtoendinfo.date }}</td>
+                <td>
+                    {{ endtoendinfo.endtoendID }}
+                </td>
+                <td>
+                    {% if endtoendinfo.createSRID == '0' %}
+                        <div style="background-color: red;color: white">No record</div>
+                    {% else %}
+                        <div style="background-color: green;color: white">Have record</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if endtoendinfo.querySRID == '0' %}
+                        <div style="background-color: red;color: white">No record</div>
+                    {% else %}
+                        <div style="background-color: green;color: white">Have record</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if endtoendinfo.cmdbID == '0' %}
+                        <div style="background-color: red;color: white">No record</div>
+                    {% else %}
+                        <div style="background-color: green;color: white">Have record</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if endtoendinfo.linuxinstanceID == '0' %}
+                        <div style="background-color: red;color: white">No record</div>
+                    {% else %}
+                        <div style="background-color: green;color: white">Have record</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if endtoendinfo.vioID == '0' %}
+                        <div style="background-color: red;color: white">No record</div>
+                    {% else %}
+                        <div style="background-color: green;color: white">Have record</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if endtoendinfo.rundeckID == '0' %}
+                        <div style="background-color: red;color: white">No record</div>
+                    {% else %}
+                        <div style="background-color: green;color: white">Have record</div>
+                    {% endif %}
+                </td>
+                <td><a href="/evrytestportal/generatetestlog/{{ endtoendinfo.endtoendID }}">Generate test log</a></td>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
 {% endblock %}
-
-
-<tr>
-    <th></th>
-    <td>{{ rundeckJobInfo. }}</td>
-</tr>
-<tr>
-    <th></th>
-    <td>{{ rundeckJobInfo. }}</td>
-</tr>
-<tr>
-    <th></th>
-    <td>{{ rundeckJobInfo. }}</td>
-</tr>
-<tr>
-    <th></th>
-    <td>{{ rundeckJobInfo. }}</td>
-</tr>
-<tr>
-    <th></th>
-    <td>{{ rundeckJobInfo. }}</td>
-</tr>
-<tr>
-    <th></th>
-    <td>{{ rundeckJobInfo. }}</td>
-</tr>
-<tr>
-    <th></th>
-    <td>{{ rundeckJobInfo. }}</td>
-</tr>
-<tr>
-    <th></th>
-    <td>{{ rundeckJobInfo. }}</td>
-</tr>

@@ -8,7 +8,7 @@ import os
 
 
 class linux():
-    def __init__(self, username='e214375', password='Passw0rd2018'):
+    def __init__(self, username='e214375', password='Evry2018'):
         self.rundeckServers = ['146.213.160.116', '146.213.160.117', '146.213.160.118']
         self.username = username
         self.password = password
@@ -90,8 +90,8 @@ class linux():
     def getPasswordOfInstanceByName(self, hypervisor, customer, instancehostname):
         self.createChannel()
         self.runCommandInChannel('export VAULT_ADDR=http://127.0.0.1:8200\n')
-        self.runCommandInChannel('vault auth -method=ldap username=e214375\n')
-        self.runCommandInChannel('Passw0rd2018\n')
+        self.runCommandInChannel('vault auth -method=ldap username='+self.username+'\n')
+        self.runCommandInChannel(self.password +'\n')
         result = self.runCommandInChannel(
             'vault read secret/OS/' + hypervisor + '/' + customer + '/' + instancehostname + '\n')
         self.closeChannel()
@@ -213,7 +213,7 @@ class linux():
 
 
 if __name__ == '__main__':
-    linux = linux('e214375', 'Passw0rd2018')
+    linux = linux('e214375', 'Evry2018')
     # if linux.connectToRundeckServer():
     #     print('rundeck server connected.')
     # else:
@@ -243,4 +243,5 @@ if __name__ == '__main__':
     # linux.closeChannel()
     # linux.closeConnection()
     # linux = linux()
-    linux.getInstanceInfo('VMWare', 'EVR-NO-CCD1', 'test-vm-12847', '10.114.27.13')
+    # linux.getInstanceInfo('VMWare', 'EVR-NO-CCD1', 'test-vm-12847', '10.114.27.13')
+    linux.getInstanceInfo('VMWare', 'EVR-NO-CCD1', 'evr-ccd1-l01471', '10.114.27.75')

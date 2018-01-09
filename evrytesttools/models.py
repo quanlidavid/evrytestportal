@@ -27,7 +27,7 @@ class VIORecord(models.Model):
     objects = VIORecordsManager()
 
     class Meta:
-        ordering = ('-instancename', '-date')
+        ordering = ('-date','-instancename')
 
     def __str__(self):
         return self.instancename
@@ -255,3 +255,37 @@ class RundeckRecord(models.Model):
 
     def __str__(self):
         return self.srid
+
+
+
+# for endtoend record
+class EndtoendRecordsManager(models.Manager):
+    def create_endtoendRecord(self,endtoendID):
+        endtoendRecord = self.create(endtoendID=endtoendID,
+                                     createSRID=0,
+                                     querySRID=0,
+                                     cmdbID=0,
+                                     linuxinstanceID = 0,
+                                     rundeckID = 0,
+                                     vioID = 0)
+        return endtoendRecord
+
+
+class EndtoendRecord(models.Model):
+    date = models.DateTimeField(auto_now=True, auto_created=True)
+    endtoendID = models.CharField(max_length=100)
+    createSRID = models.CharField(max_length=100)
+    querySRID = models.CharField(max_length=100)
+    cmdbID = models.CharField(max_length=100)
+    linuxinstanceID = models.CharField(max_length=100)
+    vioID = models.CharField(max_length=100)
+    rundeckID = models.CharField(max_length=100)
+
+
+    objects = EndtoendRecordsManager()
+
+    class Meta:
+        ordering = ('endtoendID', '-date')
+
+    def __str__(self):
+        return self.endtoendID

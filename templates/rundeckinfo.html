@@ -10,7 +10,11 @@ Query SR info from ICD
 {% block content %}
     <form method="post" action=".">
         <div class="form-row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-2">
+                <label for="domain">End to End ID:</label>
+                <input class="form-control" name="endtoendID" id="endtoendID" type="text" placeholder="End to End ID">
+            </div>
+            <div class="form-group col-md-2">
                 <label for="srid">Service Request Id:</label>
                 <input type="text" class="form-control" id="srid" name="srid" >
             </div>
@@ -28,7 +32,7 @@ Query SR info from ICD
             </div>
             <div class="form-group col-md-2">
                 <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" value="Passw0rd2018">
+                <input type="password" class="form-control" id="password" name="password" value="Evry2018">
             </div>
         </div>
         <button id="btn" type="submit" class="btn btn-primary">Query Rundeck</button>
