@@ -10,7 +10,7 @@ django-markdown-deux==1.0.5
 html5lib==0.999999999
 idna==2.6
 lxml==4.1.1
-markdown2==2.3.5
+markdown2==2.4.0
 paramiko==2.4.0
 pyasn1==0.4.2
 pycparser==2.18
